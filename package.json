@@ -13,7 +13,8 @@
     "release": "yarn workspaces foreach --all --topological version",
     "verify": "turbo lint typescript test --concurrency=1",
     "test-e2e": "playwright test",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "app": "yarn start --sources packages/esm-patient-registration-app/ --backend https://openmrs-o3.mpower-social.com"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",

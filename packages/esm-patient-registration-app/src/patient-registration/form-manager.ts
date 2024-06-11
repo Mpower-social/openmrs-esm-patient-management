@@ -31,6 +31,8 @@ import {
   updateRelationship,
   updatePatientIdentifier,
   saveEncounter,
+  savePatientIntoOpenSRP,
+  deletePatient,
 } from './patient-registration.resource';
 import { type RegistrationConfig } from '../config-schema';
 
@@ -144,6 +146,18 @@ export class FormManager {
         );
       }
     }
+
+    //saving data by custom api
+    // if (savePatientResponse.data.uuid) {
+    //   const saveIntoSRP = await savePatientIntoOpenSRP(
+    //     savePatientResponse.data,
+    //     isNewPatient && !savePatientTransactionManager.patientSaved ? undefined : '',
+    //   );
+    //   if (!saveIntoSRP.ok) {
+    //     await deletePatient(savePatientResponse.data.uuid);
+    //     return false;
+    //   }
+    // }
 
     return savePatientResponse.data.uuid;
   };

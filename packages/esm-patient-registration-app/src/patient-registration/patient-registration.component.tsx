@@ -73,7 +73,7 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
 
     const updatedFormValues = { ...values, identifiers: filterUndefinedPatientIdenfier(values.identifiers) };
     try {
-      await savePatientForm(
+      const temp = await savePatientForm(
         !inEditMode,
         updatedFormValues,
         patientUuidMap,
@@ -86,25 +86,37 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
         savePatientTransactionManager.current,
         abortController,
       );
+      if (temp) {
+        showSnackbar({
+          subtitle: inEditMode
+            ? t('updatePatientSuccessSnackbarSubtitle', "The patient's information has been successfully updated")
+            : t(
+                'registerPatientSuccessSnackbarSubtitle',
+                'The patient can now be found by searching for them using their name or ID number',
+              ),
+          title: inEditMode
+            ? t('updatePatientSuccessSnackbarTitle', 'Patient Details Updated')
+            : t('registerPatientSuccessSnackbarTitle', 'New Patient Created'),
+          kind: 'success',
+          isLowContrast: true,
+        });
 
-      showSnackbar({
-        subtitle: inEditMode
-          ? t('updatePatientSuccessSnackbarSubtitle', "The patient's information has been successfully updated")
-          : t(
-              'registerPatientSuccessSnackbarSubtitle',
-              'The patient can now be found by searching for them using their name or ID number',
-            ),
-        title: inEditMode
-          ? t('updatePatientSuccessSnackbarTitle', 'Patient Details Updated')
-          : t('registerPatientSuccessSnackbarTitle', 'New Patient Created'),
-        kind: 'success',
-        isLowContrast: true,
-      });
+        const afterUrl = new URLSearchParams(search).get('afterUrl');
+        const redirectUrl = interpolateUrl(afterUrl || config.links.submitButton, { patientUuid: values.patientUuid });
 
-      const afterUrl = new URLSearchParams(search).get('afterUrl');
-      const redirectUrl = interpolateUrl(afterUrl || config.links.submitButton, { patientUuid: values.patientUuid });
-
-      setTarget(redirectUrl);
+        setTarget(redirectUrl);
+      } else {
+        // throw new Error('Something went wrong!');
+        showSnackbar({
+          subtitle: inEditMode
+            ? t('updatePatientNotSuccessSnackbarSubtitle', 'Patient Details Update Failed')
+            : t('registerPatientNotSuccessSnackbarSubtitle', 'Because data not able to save into SRP database'),
+          title: inEditMode
+            ? t('updatePatientNotSuccessSnackbarTitle', 'Patient Details Updated Failed')
+            : t('registerPatientNotSuccessSnackbarTitle', 'Because data not able to update from SRP database'),
+          kind: 'error',
+        });
+      }
     } catch (error) {
       if (error.responseBody?.error?.globalErrors) {
         error.responseBody.error.globalErrors.forEach((error) => {

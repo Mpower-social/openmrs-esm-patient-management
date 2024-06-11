@@ -188,3 +188,28 @@ export async function deletePatientIdentifier(patientUuid: string, patientIdenti
     signal: abortController.signal,
   });
 }
+
+export function savePatientIntoOpenSRP(patient: any, patientIdentifierUuid: string) {
+  const abortController = new AbortController();
+
+  return openmrsFetch(``, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: patient,
+    signal: abortController.signal,
+  });
+}
+
+export function deletePatient(uuid: string) {
+  const abortController = new AbortController();
+
+  return openmrsFetch(``, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
+    signal: abortController.signal,
+  });
+}
