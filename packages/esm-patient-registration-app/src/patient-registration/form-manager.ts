@@ -166,20 +166,18 @@ export class FormManager {
         ...Object.assign({}, ...tempAttributes),
       };
 
-      if (isNewPatient) {
-        try {
-          const saveIntoSRP = await savePatientIntoOpenSRP(
-            finalObject,
-            isNewPatient && !savePatientTransactionManager.patientSaved ? undefined : '',
-          );
-          if (!saveIntoSRP.ok) {
-            throw new Error(`Failed to save patient to OpenSRP: ${saveIntoSRP.statusText}`);
-          }
-        } catch (error) {
-          await deletePatient(uuid);
-          console.error('Error saving patient to OpenSRP:', error);
-          return false;
+      try {
+        const saveIntoSRP = await savePatientIntoOpenSRP(
+          finalObject,
+          isNewPatient && !savePatientTransactionManager.patientSaved ? undefined : '',
+        );
+        if (!saveIntoSRP.ok) {
+          throw new Error(`Failed to save patient to OpenSRP: ${saveIntoSRP.statusText}`);
         }
+      } catch (error) {
+        isNewPatient && (await deletePatient(uuid));
+        console.error('Error saving patient to OpenSRP:', error);
+        return false;
       }
     }
 
