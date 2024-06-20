@@ -72,7 +72,9 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
     helpers.setSubmitting(true);
 
     const updatedFormValues = { ...values, identifiers: filterUndefinedPatientIdenfier(values.identifiers) };
+
     try {
+
       const temp = await savePatientForm(
         !inEditMode,
         updatedFormValues,
@@ -86,6 +88,7 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
         savePatientTransactionManager.current,
         abortController,
       );
+
       if (temp) {
         showSnackbar({
           subtitle: inEditMode
@@ -109,11 +112,11 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
         // throw new Error('Something went wrong!');
         showSnackbar({
           subtitle: inEditMode
-            ? t('updatePatientNotSuccessSnackbarSubtitle', 'Patient Details Update Failed')
-            : t('registerPatientNotSuccessSnackbarSubtitle', 'Because data not able to save into SRP database'),
+            ? t('updatePatientNotSuccessSnackbarSubtitle', 'Because data not able to update from costume database')
+            : t('registerPatientNotSuccessSnackbarSubtitle', 'Because data not able to save into costume database'),
           title: inEditMode
             ? t('updatePatientNotSuccessSnackbarTitle', 'Patient Details Updated Failed')
-            : t('registerPatientNotSuccessSnackbarTitle', 'Because data not able to update from SRP database'),
+            : t('registerPatientNotSuccessSnackbarTitle', 'Patient Registration Failed'),
           kind: 'error',
         });
       }

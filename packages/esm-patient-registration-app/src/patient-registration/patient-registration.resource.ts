@@ -59,7 +59,6 @@ export function generateIdentifier(source: string) {
 
 export function deletePersonName(nameUuid: string, personUuid: string) {
   const abortController = new AbortController();
-
   return openmrsFetch(`${restBaseUrl}/person/${personUuid}/name/${nameUuid}`, {
     method: 'DELETE',
     signal: abortController.signal,
@@ -191,8 +190,7 @@ export async function deletePatientIdentifier(patientUuid: string, patientIdenti
 
 export function savePatientIntoOpenSRP(patient: any, patientIdentifierUuid: string) {
   const abortController = new AbortController();
-
-  return openmrsFetch(``, {
+  return openmrsFetch(`${restBaseUrl}/custom-person/save`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -205,7 +203,7 @@ export function savePatientIntoOpenSRP(patient: any, patientIdentifierUuid: stri
 export function deletePatient(uuid: string) {
   const abortController = new AbortController();
 
-  return openmrsFetch(``, {
+  return openmrsFetch(`${restBaseUrl}/patient/${uuid}`, {
     headers: {
       'Content-Type': 'application/json',
     },

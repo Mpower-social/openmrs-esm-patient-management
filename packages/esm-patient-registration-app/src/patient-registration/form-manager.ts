@@ -148,16 +148,40 @@ export class FormManager {
     }
 
     //saving data by custom api
-    // if (savePatientResponse.data.uuid) {
-    //   const saveIntoSRP = await savePatientIntoOpenSRP(
-    //     savePatientResponse.data,
-    //     isNewPatient && !savePatientTransactionManager.patientSaved ? undefined : '',
-    //   );
-    //   if (!saveIntoSRP.ok) {
-    //     await deletePatient(savePatientResponse.data.uuid);
-    //     return false;
-    //   }
-    // }
+    if (savePatientResponse.data?.uuid) {
+      // Extract person data more concisely
+      const { person, uuid } = savePatientResponse.data;
+      // Transform attributes using destructuring and object spread syntax
+      const tempAttributes = person.attributes.map(({ display }) => ({
+        [display.split('=')[0].trim().replace(/ /g, '')]: display.split('=')[1].trimStart(),
+      }));
+
+      // Combine attributes and other data efficiently
+      const finalObject = {
+        ...person,
+        personUuid: uuid,
+        location: 0,
+        unionId: 0,
+        wardId: 0,
+        ...Object.assign({}, ...tempAttributes),
+      };
+
+      if (isNewPatient) {
+        try {
+          const saveIntoSRP = await savePatientIntoOpenSRP(
+            finalObject,
+            isNewPatient && !savePatientTransactionManager.patientSaved ? undefined : '',
+          );
+          if (!saveIntoSRP.ok) {
+            throw new Error(`Failed to save patient to OpenSRP: ${saveIntoSRP.statusText}`);
+          }
+        } catch (error) {
+          await deletePatient(uuid);
+          console.error('Error saving patient to OpenSRP:', error);
+          return false;
+        }
+      }
+    }
 
     return savePatientResponse.data.uuid;
   };
