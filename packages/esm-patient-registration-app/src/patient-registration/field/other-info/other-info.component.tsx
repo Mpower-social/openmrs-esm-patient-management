@@ -26,33 +26,28 @@ export function OtherInfo() {
   }, []);
 
   const otherInputFields = [
- 
     <PersonAttributeField
       fieldDefinition={{
         id: 'mobileNo',
         type: 'person attribute',
         uuid: config.fieldConfigurations.phone.personAttributeUuid,
         showHeading: false,
-        validation: {
-          required: true,
-        },
         label: 'Mobile No',
       }}
     />,
     <PersonAttributeField
-    fieldDefinition={{
-      id: 'maritalStatus',
-      type: 'person attribute',
-      uuid: config.fieldConfigurations.maritalStatus.personAttributeUuid,
-      showHeading: false,
-      answerConceptSetUuid: 'c955a699-5f57-4a92-a7e4-30c6215430e9',
-      validation: {
-        required: true,
-      },
-      label: 'Marital Status',
-    }}
-  />
-  
+      fieldDefinition={{
+        id: 'maritalStatus',
+        type: 'person attribute',
+        uuid: config.fieldConfigurations.maritalStatus.personAttributeUuid,
+        showHeading: false,
+        answerConceptSetUuid: 'c955a699-5f57-4a92-a7e4-30c6215430e9',
+        validation: {
+          required: true,
+        },
+        label: 'Marital Status',
+      }}
+    />,
   ];
 
   return (

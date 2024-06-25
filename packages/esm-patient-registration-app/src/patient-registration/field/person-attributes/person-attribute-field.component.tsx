@@ -39,6 +39,7 @@ export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldPr
             answerConceptSetUuid={fieldDefinition.answerConceptSetUuid}
             label={fieldDefinition.label}
             id={fieldDefinition?.id}
+            required={fieldDefinition.validation?.required ?? false}
             customConceptAnswers={fieldDefinition.customConceptAnswers ?? []}
           />
         );
