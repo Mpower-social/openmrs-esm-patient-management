@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { RadioButton, RadioButtonGroup } from '@carbon/react';
+import { RadioButton, RadioButtonGroup, Grid, Column } from '@carbon/react';
 import styles from '../field.scss';
 import { useTranslation } from 'react-i18next';
 import { PatientRegistrationContext } from '../../patient-registration-context';
@@ -29,20 +29,24 @@ export const GenderField: React.FC = () => {
     <div className={styles.halfWidthInDesktopView}>
       <h4 className={styles.productiveHeading02Light}>{t('sexFieldLabelText', 'Sex')}</h4>
       <div className={styles.sexField}>
-        <p className="cds--label">{t('genderLabelText', 'Sex')}</p>
-        <RadioButtonGroup name="gender" orientation="vertical" onChange={setGender} valueSelected={field.value}>
-          {fieldConfigs.map((option) => (
-            <RadioButton
-              key={option.label ?? option.value}
-              id={`gender-option-${option.value}`}
-              value={option.value}
-              labelText={t(option.label ?? option.value, option.label ?? option.value)}
-            />
-          ))}
-        </RadioButtonGroup>
-        {meta.touched && meta.error && (
-          <div className={styles.radioFieldError}>{t(meta.error, 'Gender is required')}</div>
-        )}
+        {/* <p className="cds--label">{t('genderLabelText', 'Sex')}</p> */}
+        <Grid>
+          <Column lg={5} md={5} sm={4}>
+            <RadioButtonGroup name="gender" orientation="vertical" onChange={setGender} valueSelected={field.value}>
+              {fieldConfigs.map((option) => (
+                <RadioButton
+                  key={option.label ?? option.value}
+                  id={`gender-option-${option.value}`}
+                  value={option.value}
+                  labelText={t(option.label ?? option.value, option.label ?? option.value)}
+                />
+              ))}
+            </RadioButtonGroup>
+            {meta.touched && meta.error && (
+              <div className={styles.radioFieldError}>{t(meta.error, 'Gender is required')}</div>
+            )}
+          </Column>
+        </Grid>
       </div>
     </div>
   );

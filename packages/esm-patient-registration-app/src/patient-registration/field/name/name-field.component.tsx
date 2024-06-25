@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ContentSwitcher, Switch } from '@carbon/react';
+import { ContentSwitcher, Switch, Column, Grid } from '@carbon/react';
 import { useField } from 'formik';
 import { ExtensionSlot, useConfig } from '@openmrs/esm-framework';
 import { Input } from '../../input/basic-input/input/input.component';
@@ -66,49 +66,47 @@ export const NameField = () => {
   };
 
   const firstNameField = (
-    <Input
-      id="givenName"
-      name="givenName"
-      labelText={t('givenNameLabelText', 'First Name')}
-      checkWarning={checkNumber}
-      required
-    />
+    <Column lg={5} md={4} sm={2}>
+      <Input
+        id="givenName"
+        name="givenName"
+        labelText={t('givenNameLabelText', 'First Name')}
+        checkWarning={checkNumber}
+        required
+      />
+    </Column>
   );
 
   const middleNameField = displayMiddleName && (
-    <Input
-      id="middleName"
-      name="middleName"
-      labelText={t('middleNameLabelText', 'Middle Name')}
-      checkWarning={checkNumber}
-    />
+    <Column lg={5} md={4} sm={2}>
+      <Input
+        id="middleName"
+        name="middleName"
+        labelText={t('middleNameLabelText', 'Middle Name')}
+        checkWarning={checkNumber}
+      />
+    </Column>
   );
 
   const familyNameField = (
-    <Input
-      id="familyName"
-      name="familyName"
-      labelText={t('familyNameLabelText', 'Family Name')}
-      checkWarning={checkNumber}
-      required
-    />
+    <Column lg={5} md={4} sm={2}>
+      <Input
+        id="familyName"
+        name="familyName"
+        labelText={t('familyNameLabelText', 'Family Name')}
+        checkWarning={checkNumber}
+        required
+      />
+    </Column>
   );
 
   return (
     <div>
       <h4 className={styles.productiveHeading02Light}>{t('fullNameLabelText', 'Full Name')}</h4>
-      <div className={styles.grid}>
-        {displayCapturePhoto && (
-          <ExtensionSlot
-            className={styles.photoExtension}
-            name="capture-patient-photo-slot"
-            state={{ onCapturePhoto, initialState: currentPhoto }}
-          />
-        )}
-
-        <div className={styles.nameField}>
+      <div>
+        <Grid>
           {(allowUnidentifiedPatients || isPatientUnknown) && (
-            <>
+            <Column lg={5} md={4} sm={2}>
               <div className={styles.dobContentSwitcherLabel}>
                 <span className={styles.label01}>{t('patientNameKnown', "Patient's Name is Known?")}</span>
               </div>
@@ -119,8 +117,18 @@ export const NameField = () => {
                 <Switch name="known" text={t('yes', 'Yes')} />
                 <Switch name="unknown" text={t('no', 'No')} />
               </ContentSwitcher>
-            </>
+            </Column>
           )}
+          <Column lg={5} md={4} sm={2}></Column>
+          <Column lg={5} md={4} sm={2}>
+            {/* {displayCapturePhoto && (
+              <ExtensionSlot
+                className={styles.photoExtension}
+                name="capture-patient-photo-slot"
+                state={{ onCapturePhoto, initialState: currentPhoto }}
+              />
+            )} */}
+          </Column>
           {!isPatientUnknown &&
             (!displayReverseFieldOrder ? (
               <>
@@ -135,7 +143,7 @@ export const NameField = () => {
                 {firstNameField}
               </>
             ))}
-        </div>
+        </Grid>
       </div>
     </div>
   );
