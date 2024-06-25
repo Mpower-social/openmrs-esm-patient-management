@@ -11,6 +11,7 @@ export interface CodedPersonAttributeFieldProps {
   personAttributeType: PersonAttributeTypeResponse;
   answerConceptSetUuid: string;
   label?: string;
+  required?: boolean;
   customConceptAnswers: Array<{ uuid: string; label?: string }>;
 }
 
@@ -19,6 +20,7 @@ export function CodedPersonAttributeField({
   personAttributeType,
   answerConceptSetUuid,
   label,
+  required,
   customConceptAnswers,
 }: CodedPersonAttributeFieldProps) {
   const { data: conceptAnswers, isLoading: isLoadingConceptAnswers } = useConceptAnswers(
@@ -96,9 +98,10 @@ export function CodedPersonAttributeField({
                   <Select
                     id={id}
                     name={`person-attribute-${personAttributeType.uuid}`}
-                    labelText={label ?? personAttributeType?.display}
+                    labelText={label + (!required ? ' (optional)' : '') ?? personAttributeType?.display}
                     invalid={errors[fieldName] && touched[fieldName]}
                     size={'sm'}
+                    required={required}
                     {...field}>
                     <SelectItem value={''} text={t('selectAnOption', 'Select an option')} />
                     {answers.map((answer) => (

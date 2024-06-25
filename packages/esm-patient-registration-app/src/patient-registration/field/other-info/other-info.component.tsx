@@ -32,9 +32,6 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.phone.personAttributeUuid,
         showHeading: false,
-        validation: {
-          required: true,
-        },
         label: 'Mobile No',
       }}
     />,
@@ -45,9 +42,7 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.maritalStatus.personAttributeUuid,
         showHeading: false,
         answerConceptSetUuid: 'c955a699-5f57-4a92-a7e4-30c6215430e9',
-        validation: {
-          required: true,
-        },
+
         label: 'Marital Status',
       }}
     />,
@@ -58,9 +53,6 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.bloodGroup.personAttributeUuid,
         showHeading: false,
         answerConceptSetUuid: '4c2a94c6-5a14-485e-b0f5-01921750b9b6',
-        validation: {
-          required: true,
-        },
         label: 'Blood Group',
       }}
     />,
@@ -71,9 +63,7 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.religion.personAttributeUuid,
         showHeading: false,
         answerConceptSetUuid: '43eee45a-082e-4216-8107-9f9e1977330b',
-        validation: {
-          required: true,
-        },
+
         label: 'Religion',
       }}
     />,
@@ -152,9 +142,7 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.fatherNameEnglish.personAttributeUuid,
         showHeading: false,
-        validation: {
-          required: true,
-        },
+
         label: `Father's Name`,
       }}
     />,
