@@ -155,8 +155,7 @@ export const builtInSections: Array<SectionDefinition> = [
   },
   { id: "contact", name: "Contact Details", fields: ["address"] },
   { id: "otherInfo", name: "Other Information", fields: ["otherInfo"] },
-  { id: "death", name: "Death Info", fields: [] },
-  { id: "relationships", name: "Relationships", fields: [] },
+  { id: "death", name: "Death Info", fields: [] }
 ];
  
 // These fields are handled specially in field.component.tsx

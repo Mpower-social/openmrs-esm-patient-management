@@ -3,6 +3,7 @@ import { InlineNotification, TextInputSkeleton, SkeletonText } from '@carbon/rea
 import { type FieldDefinition } from '../../../config-schema';
 import { CodedPersonAttributeField } from './coded-person-attribute-field.component';
 import { usePersonAttributeType } from './person-attributes.resource';
+import { DatePickerPersonAttributeField } from './date-picker-person-attribute-field.component';
 import { TextPersonAttributeField } from './text-person-attribute-field.component';
 import { useTranslation } from 'react-i18next';
 import styles from '../field.scss';
@@ -31,6 +32,7 @@ export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldPr
           />
         );
       case 'org.openmrs.Concept':
+      case 'org.openmrs.Encounter':
         return (
           <CodedPersonAttributeField
             personAttributeType={personAttributeType}
@@ -38,9 +40,20 @@ export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldPr
             label={fieldDefinition.label}
             id={fieldDefinition?.id}
             customConceptAnswers={fieldDefinition.customConceptAnswers ?? []}
-            required={fieldDefinition.validation?.required ?? false}
           />
         );
+      // case 'org.openmrs.util.AttributableDate':
+      // return (
+      //   <DatePickerPersonAttributeField
+      //     readOnly={fieldDefinition.readOnly}
+      //     defaultValue={fieldDefinition.defaultValue}
+      //     personAttributeType={personAttributeType}
+      //     label={fieldDefinition.label}
+      //     range={fieldDefinition.range}
+      //     required={fieldDefinition.validation?.required ?? false}
+      //     id={fieldDefinition?.id}
+      //   />
+      // );
       default:
         return (
           <InlineNotification kind="error" title="Error">
