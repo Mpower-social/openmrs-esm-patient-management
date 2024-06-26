@@ -7,6 +7,8 @@ import { type RegistrationConfig } from '../../../config-schema';
 import { generateFormatting } from '../../date-util';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
+import {SearchByNID} from '../../section/search-by-nid/search-by-nid.component'
+
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
@@ -90,18 +92,9 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
-        id: 'uid',
+        id: 'fullNameBangla',
         type: 'person attribute',
-        uuid: config.fieldConfigurations.uid.personAttributeUuid,
-        showHeading: false,
-        label: 'UID',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fullnameBangla',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fullnameBangla.personAttributeUuid,
+        uuid: config.fieldConfigurations.fullNameBangla.personAttributeUuid,
         showHeading: false,
         label: 'Full Name in Bangla',
       }}
@@ -261,6 +254,7 @@ export function OtherInfo() {
 
   return (
     <div>
+
       <Grid>
         {otherInputFields.map((field, index) => (
           <Column key={index} lg={4} md={4} sm={2}>

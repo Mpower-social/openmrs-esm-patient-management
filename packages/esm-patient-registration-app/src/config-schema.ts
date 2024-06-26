@@ -75,7 +75,7 @@ export interface RegistrationConfig {
     uid: {
       personAttributeUuid: string;
     };
-    fullnameBangla: {
+    fullNameBangla: {
       personAttributeUuid: string;
     };
     motherName: {
@@ -460,7 +460,7 @@ export const esmPatientRegistrationSchema = {
         },
       },
     },
-    fullnameBangla: {
+    fullNameBangla: {
       personAttributeUuid: {
         _type: Type.UUID,
         _default: "c9aaba5b-9227-4e30-8067-a6c1f15b0174",

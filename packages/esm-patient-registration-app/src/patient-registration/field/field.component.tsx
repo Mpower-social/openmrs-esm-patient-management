@@ -9,6 +9,7 @@ import { CustomField } from './custom-field.component';
 import { AddressComponent } from './address/address-field.component';
 import { PhoneField } from './phone/phone-field.component';
 import { OtherInfo } from './other-info/other-info.component';
+import {SearchByNID} from '../section/search-by-nid/search-by-nid.component'
 
 export interface FieldProps {
   name: string;
