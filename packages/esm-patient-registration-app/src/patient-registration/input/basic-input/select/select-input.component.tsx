@@ -1,7 +1,8 @@
-import React from 'react';
 import { Layer, Select, SelectItem } from '@carbon/react';
 import { useField } from 'formik';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import LabelWithRequiredIndicator from '../../../../components/LabelWithRequiredIndicator';
 
 interface SelectInputProps {
   name: string;
@@ -18,7 +19,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, 
     ...options.map((currentOption, index) => <SelectItem text={currentOption} value={currentOption} key={index} />),
   ];
 
-  const labelText = required ? label : `${label} (${t('optional', 'optional')})`;
+  const labelText = <LabelWithRequiredIndicator text={label} isRequired={required} />;
 
   return (
     <div style={{ marginBottom: '1rem' }}>

@@ -3,6 +3,7 @@ import { reportError } from '@openmrs/esm-framework';
 import { Field } from 'formik';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import LabelWithRequiredIndicator from '../../../components/LabelWithRequiredIndicator';
 import { type PersonAttributeTypeResponse } from '../../patient-registration.types';
 import { useConceptAnswers } from '../field.resource';
 
@@ -87,6 +88,7 @@ export function CodedPersonAttributeField({
     return null;
   }
 
+  const labelText = <LabelWithRequiredIndicator text={label ?? personAttributeType?.display} isRequired={required} />;
   return (
     <div>
       {!isLoadingConceptAnswers ? (
@@ -98,7 +100,7 @@ export function CodedPersonAttributeField({
                   <Select
                     id={id}
                     name={`person-attribute-${personAttributeType.uuid}`}
-                    labelText={label + (!required ? ' (optional)' : '') ?? personAttributeType?.display}
+                    labelText={labelText}
                     invalid={errors[fieldName] && touched[fieldName]}
                     size={'sm'}
                     required={required}

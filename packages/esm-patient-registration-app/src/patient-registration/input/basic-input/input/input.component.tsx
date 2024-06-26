@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Layer, TextInput } from '@carbon/react';
 import { useField } from 'formik';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import LabelWithRequiredIndicator from '../../../../components/LabelWithRequiredIndicator';
 
 // FIXME Temporarily imported here
 export interface TextInputProps
@@ -158,10 +159,10 @@ export const Input: React.FC<InputProps> = ({ checkWarning, ...props }) => {
     return undefined;
   }, [checkWarning, invalidText, value, t]);
 
-  const labelText = props.required ? props.labelText : `${props.labelText} (${t('optional', 'optional')})`;
+  const labelText = <LabelWithRequiredIndicator text={props.labelText} isRequired={props.required} />;
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
+    <div style={{ marginBottom: '1rem', position: 'relative' }}>
       <Layer>
         <TextInput
           {...props}
@@ -173,7 +174,6 @@ export const Input: React.FC<InputProps> = ({ checkWarning, ...props }) => {
           warnText={warnText}
           value={value}
           size="sm"
-
         />
       </Layer>
     </div>
