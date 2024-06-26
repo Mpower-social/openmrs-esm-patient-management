@@ -122,20 +122,10 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
-        id: 'motherUID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.motherUID.personAttributeUuid,
-        showHeading: false,
-        label: `Mother's UID`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
         id: 'fatherNameEnglish',
         type: 'person attribute',
         uuid: config.fieldConfigurations.fatherNameEnglish.personAttributeUuid,
         showHeading: false,
-
         label: `Father's Name`,
       }}
     />,
@@ -146,15 +136,6 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.fatherNameBangla.personAttributeUuid,
         showHeading: false,
         label: `Father's Name in Bangla`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fatherUID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fatherUID.personAttributeUuid,
-        showHeading: false,
-        label: `Father's UID`,
       }}
     />,
     <PersonAttributeField
@@ -212,15 +193,6 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.spouseNameEnglish.personAttributeUuid,
         showHeading: false,
         label: `Spouse's Name`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'spouseUID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.spouseUID.personAttributeUuid,
-        showHeading: false,
-        label: `Spouse's UID`,
       }}
     />,
     <PersonAttributeField

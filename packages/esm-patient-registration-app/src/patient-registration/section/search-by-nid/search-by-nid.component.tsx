@@ -1,11 +1,13 @@
 import { Column, Grid, Tile } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
 import { useField } from 'formik';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect,useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
+import { getDataByNID } from '../../patient-registration.resource';
 
 export function SearchByNID() {
   const { setFieldValue, values } = useContext(PatientRegistrationContext);
+  const [searchBody,setSearchBody]=useState<any>()
 
   const getGender = (gender) => {
     switch (gender) {
@@ -22,23 +24,18 @@ export function SearchByNID() {
     }
   };
 
-  useEffect(() => {
-    if(values.givenName) return;
-    const temp = {
-      citizenNid: "dddd",
+  const searchByNIDHandler = async () => {
+    const res = await getDataByNID({
+      nidOrBrn: '6904959449',
+      type: 'nid',
+      dob: '1999-12-12',
       hid: '98008214606',
-      binBrn: '20006825005838716',
-      dob: '2000-05-05T00:00:00.000Z',
-      mobile: '01634698477',
-      gender: 'F',
-      nationality: "bang",
-      fullNameEnglish: 'TASMIA aa',
-      fullNameBangla: 'তাছমিয়া তাবাচ্ছুম',
-      motherNameEnglish: null,
-      motherNameBangla: null,
-      fatherNameEnglish: null,
-      fatherNameBangla: null,
-    };
+    });
+
+  
+    console.log(res,'dataaa')
+    const temp = res.data.personInformation
+    if (values.givenName) return;
 
     const attributesMapping = {
       '14d4f066-15f5-102d-96e4-000c29c2a5d7': temp.mobile,
@@ -48,12 +45,12 @@ export function SearchByNID() {
       '2b8051e6-3c2d-45b5-ac92-2db429a97edb': temp.fatherNameEnglish,
       '25819ba8-6126-48f3-b8f0-d31960c31e65': temp.fatherNameBangla,
       '26ad0d0b-d6c3-4c78-a4b7-4d4e04bc9e86': temp.nationality,
-      '041dcab7-ac07-41aa-928a-1f13e7c65c34': temp.citizenNid
+      '041dcab7-ac07-41aa-928a-1f13e7c65c34': temp.citizenNid,
     };
 
     const defaultValues = {
       gender: getGender(temp.gender),
-      givenName: temp.fullNameEnglish.split(" ")[0],
+      givenName: temp.fullNameEnglish.split(' ')[0],
       familyName: temp.fullNameEnglish.split(' ').slice(1).join(' '),
       birthdate: new Date(temp.dob),
     };
@@ -67,6 +64,10 @@ export function SearchByNID() {
     });
 
     console.log('Updated values:', values);
+  };
+
+  useEffect(() => {
+    searchByNIDHandler();
   }, []);
 
   return (

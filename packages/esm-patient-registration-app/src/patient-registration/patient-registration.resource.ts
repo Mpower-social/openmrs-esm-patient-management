@@ -211,3 +211,16 @@ export function deletePatient(uuid: string) {
     signal: abortController.signal,
   });
 }
+
+
+export function getDataByNID(body: any) {
+  const abortController = new AbortController();
+  return openmrsFetch(`${restBaseUrl}/external-api`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body,
+    signal: abortController.signal,
+  });
+}
