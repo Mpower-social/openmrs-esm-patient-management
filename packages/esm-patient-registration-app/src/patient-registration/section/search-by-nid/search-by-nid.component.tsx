@@ -4,6 +4,7 @@ import { useField } from 'formik';
 import React, { useCallback, useContext, useEffect,useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { getDataByNID } from '../../patient-registration.resource';
+import styles from '../../patient-registration.scss';
 
 export function SearchByNID() {
   const { setFieldValue, values } = useContext(PatientRegistrationContext);
@@ -24,7 +25,16 @@ export function SearchByNID() {
     }
   };
 
+  function isLastRoutePatientRegistration() {
+    const segments = window.location.pathname.split('/');
+    const lastSegment = segments.filter(segment => segment !== "").pop();
+    return lastSegment === 'patient-registration';
+  }
+
   const searchByNIDHandler = async () => {
+
+    if (!isLastRoutePatientRegistration()) return;
+
     const res = await getDataByNID({
       nidOrBrn: '6904959449',
       type: 'nid',
@@ -32,11 +42,9 @@ export function SearchByNID() {
       hid: '98008214606',
     });
 
-  
     console.log(res,'dataaa')
     const temp = res.data.personInformation
-    if (values.givenName) return;
-
+   
     const attributesMapping = {
       '14d4f066-15f5-102d-96e4-000c29c2a5d7': temp.mobile,
       'c9aaba5b-9227-4e30-8067-a6c1f15b0174': temp.fullNameBangla,
@@ -63,7 +71,7 @@ export function SearchByNID() {
       setFieldValue(`attributes[${uuid}]`, value);
     });
 
-    console.log('Updated values:', values);
+    console.log('Updated values:', values.givenName);
   };
 
   useEffect(() => {
@@ -71,8 +79,12 @@ export function SearchByNID() {
   }, []);
 
   return (
-    <Tile>
-      <Grid>Life</Grid>
-    </Tile>
+    <>
+    {isLastRoutePatientRegistration()&&
+      <Tile style={{marginBottom:"20px"}}>
+        <h3 className={styles.productiveHeading02} style={{ color: '#161616' }}>Search</h3>
+      </Tile>
+    }
+    </>
   );
 }
