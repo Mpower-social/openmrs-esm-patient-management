@@ -1,4 +1,4 @@
-import { Column, Grid } from '@carbon/react';
+import { Column, Grid, Dropdown, SelectItem } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
 import { useField } from 'formik';
 import React, { useCallback, useContext, useEffect } from 'react';
@@ -7,6 +7,7 @@ import { type RegistrationConfig } from '../../../config-schema';
 import { generateFormatting } from '../../date-util';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
+import { SelectInput } from '../../input/basic-input/select/select-input.component';
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
@@ -26,6 +27,16 @@ export function OtherInfo() {
   }, []);
 
   const otherInputFields = [
+    <SelectInput
+      name="gender"
+      options={[
+        { value: 'male', text: 'Male' },
+        { value: 'female', text: 'Female' },
+        { value: 'other', text: 'Other' },
+        { value: 'unknown', text: 'Unknown' },
+      ]}
+      label="Gender"
+    />,
     <PersonAttributeField
       fieldDefinition={{
         id: 'mobileNo',
@@ -63,7 +74,6 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.religion.personAttributeUuid,
         showHeading: false,
         answerConceptSetUuid: '43eee45a-082e-4216-8107-9f9e1977330b',
-
         label: 'Religion',
       }}
     />,
@@ -90,18 +100,9 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
-        id: 'uid',
+        id: 'fullNameBangla',
         type: 'person attribute',
-        uuid: config.fieldConfigurations.uid.personAttributeUuid,
-        showHeading: false,
-        label: 'UID',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fullnameBangla',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fullnameBangla.personAttributeUuid,
+        uuid: config.fieldConfigurations.fullNameBangla.personAttributeUuid,
         showHeading: false,
         label: 'Full Name in Bangla',
       }}
@@ -129,20 +130,10 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
-        id: 'motherUID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.motherUID.personAttributeUuid,
-        showHeading: false,
-        label: `Mother's UID`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
         id: 'fatherNameEnglish',
         type: 'person attribute',
         uuid: config.fieldConfigurations.fatherNameEnglish.personAttributeUuid,
         showHeading: false,
-
         label: `Father's Name`,
       }}
     />,
@@ -153,15 +144,6 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.fatherNameBangla.personAttributeUuid,
         showHeading: false,
         label: `Father's Name in Bangla`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fatherUID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fatherUID.personAttributeUuid,
-        showHeading: false,
-        label: `Father's UID`,
       }}
     />,
     <PersonAttributeField
@@ -223,15 +205,6 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
-        id: 'spouseUID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.spouseUID.personAttributeUuid,
-        showHeading: false,
-        label: `Spouse's UID`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
         id: 'disabilityType',
         type: 'person attribute',
         uuid: config.fieldConfigurations.disabilityType.personAttributeUuid,
@@ -246,15 +219,6 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.ethnicity.personAttributeUuid,
         showHeading: false,
         label: `Ethnicity`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'biometricID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.biometricID.personAttributeUuid,
-        showHeading: false,
-        label: `Biometric ID`,
       }}
     />,
   ];

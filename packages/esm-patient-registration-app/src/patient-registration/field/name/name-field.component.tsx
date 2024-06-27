@@ -107,7 +107,7 @@ export const NameField = () => {
         <Grid>
           {(allowUnidentifiedPatients || isPatientUnknown) && (
             <Column lg={5} md={4} sm={2}>
-              <div className={styles.dobContentSwitcherLabel}>
+              {/* <div className={styles.dobContentSwitcherLabel}>
                 <span className={styles.label01}>{t('patientNameKnown', "Patient's Name is Known?")}</span>
               </div>
               <ContentSwitcher
@@ -116,7 +116,7 @@ export const NameField = () => {
                 onChange={toggleNameKnown}>
                 <Switch name="known" text={t('yes', 'Yes')} />
                 <Switch name="unknown" text={t('no', 'No')} />
-              </ContentSwitcher>
+              </ContentSwitcher> */}
             </Column>
           )}
           <Column lg={5} md={4} sm={2}></Column>

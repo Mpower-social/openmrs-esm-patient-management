@@ -78,7 +78,7 @@ export interface RegistrationConfig {
     uid: {
       personAttributeUuid: string;
     };
-    fullnameBangla: {
+    fullNameBangla: {
       personAttributeUuid: string;
     };
     motherName: {
@@ -154,7 +154,7 @@ export const builtInSections: Array<SectionDefinition> = [
   {
     id: 'demographics',
     name: 'Basic Info',
-    fields: ['name', 'gender', 'dob', 'id'],
+    fields: ['name', 'dob', 'id'],
   },
   // { id: "contact", name: "Contact Details", fields: ["address"] },
   { id: 'locations', name: 'Location Details', fields: ['locations'] },
@@ -465,7 +465,7 @@ export const esmPatientRegistrationSchema = {
         },
       },
     },
-    fullnameBangla: {
+    fullNameBangla: {
       personAttributeUuid: {
         _type: Type.UUID,
         _default: 'c9aaba5b-9227-4e30-8067-a6c1f15b0174',

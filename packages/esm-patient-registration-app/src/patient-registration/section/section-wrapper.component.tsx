@@ -30,6 +30,7 @@ export const SectionWrapper = ({ sectionDefinition, index }: SectionWrapperProps
       <span className={styles.label01}>
         {t('allFieldsRequiredText', 'All fields are required unless marked optional')}
       </span>
+      
       <div style={{ margin: '1rem 0 1rem' }}>
         <Tile>
           <Section sectionDefinition={sectionDefinition} />

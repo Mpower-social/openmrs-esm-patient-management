@@ -25,6 +25,7 @@ import { builtInSections, type RegistrationConfig, type SectionDefinition } from
 import { SectionWrapper } from './section/section-wrapper.component';
 import BeforeSavePrompt from './before-save-prompt';
 import styles from './patient-registration.scss';
+import { SearchByNID } from './section/search-by-nid/search-by-nid.component';
 
 let exportedInitialFormValuesForTesting = {} as FormValues;
 
@@ -74,7 +75,6 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
     const updatedFormValues = { ...values, identifiers: filterUndefinedPatientIdenfier(values.identifiers) };
 
     try {
-
       const temp = await savePatientForm(
         !inEditMode,
         updatedFormValues,
@@ -162,82 +162,85 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
   };
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={initialFormValues}
-      validationSchema={validationSchema}
-      onSubmit={onFormSubmit}>
-      {(props) => (
-        <Form className={styles.form}>
-          <BeforeSavePrompt when={props.dirty} redirect={target} />
-          <div className={styles.formContainer}>
-            <div>
-              <div className={styles.stickyColumn}>
-                <h4>
-                  {inEditMode ? t('edit', 'Edit') : t('createNew', 'Create New')} {t('patient', 'Patient')}
-                </h4>
-                {showDummyData && <DummyDataInput setValues={props.setValues} />}
-                <p className={styles.label01}>{t('jumpTo', 'Jump to')}</p>
-                {sections.map((section) => (
-                  <div className={classNames(styles.space05, styles.touchTarget)} key={section.name}>
-                    <Link className={styles.linkName} onClick={() => scrollIntoView(section.id)}>
-                      <XAxis size={16} /> {t(`${section.id}Section`, section.name)}
-                    </Link>
-                  </div>
-                ))}
-                <Button
-                  className={styles.submitButton}
-                  type="submit"
-                  onClick={() => props.validateForm().then((errors) => displayErrors(errors))}
-                  // Current session and identifiers are required for patient registration.
-                  // If currentSession or identifierTypes are not available, then the
-                  // user should be blocked to register the patient.
-                  disabled={!currentSession || !identifierTypes || props.isSubmitting}>
-                  {props.isSubmitting ? (
-                    <InlineLoading
-                      className={styles.spinner}
-                      description={`${t('submitting', 'Submitting')} ...`}
-                      iconDescription="submitting"
-                      status="active"
+    <>
+      <Formik
+        enableReinitialize
+        initialValues={initialFormValues}
+        validationSchema={validationSchema}
+        onSubmit={onFormSubmit}>
+        {(props) => (
+          <Form className={styles.form}>
+            <BeforeSavePrompt when={props.dirty} redirect={target} />
+            <div className={styles.formContainer}>
+              <div>
+                <div className={styles.stickyColumn}>
+                  <h4>
+                    {inEditMode ? t('edit', 'Edit') : t('createNew', 'Create New')} {t('patient', 'Patient')}
+                  </h4>
+                  {showDummyData && <DummyDataInput setValues={props.setValues} />}
+                  <p className={styles.label01}>{t('jumpTo', 'Jump to')}</p>
+                  {sections.map((section) => (
+                    <div className={classNames(styles.space05, styles.touchTarget)} key={section.name}>
+                      <Link className={styles.linkName} onClick={() => scrollIntoView(section.id)}>
+                        <XAxis size={16} /> {t(`${section.id}Section`, section.name)}
+                      </Link>
+                    </div>
+                  ))}
+                  <Button
+                    className={styles.submitButton}
+                    type="submit"
+                    onClick={() => props.validateForm().then((errors) => displayErrors(errors))}
+                    // Current session and identifiers are required for patient registration.
+                    // If currentSession or identifierTypes are not available, then the
+                    // user should be blocked to register the patient.
+                    disabled={!currentSession || !identifierTypes || props.isSubmitting}>
+                    {props.isSubmitting ? (
+                      <InlineLoading
+                        className={styles.spinner}
+                        description={`${t('submitting', 'Submitting')} ...`}
+                        iconDescription="submitting"
+                        status="active"
+                      />
+                    ) : inEditMode ? (
+                      t('updatePatient', 'Update Patient')
+                    ) : (
+                      t('registerPatient', 'Register Patient')
+                    )}
+                  </Button>
+                  <Button className={styles.cancelButton} kind="tertiary" onClick={cancelRegistration}>
+                    {t('cancel', 'Cancel')}
+                  </Button>
+                </div>
+              </div>
+              <div className={styles.infoGrid}>
+                <PatientRegistrationContext.Provider
+                  value={{
+                    identifierTypes: identifierTypes,
+                    validationSchema,
+                    values: props.values,
+                    inEditMode,
+                    setFieldValue: props.setFieldValue,
+                    setCapturePhotoProps,
+                    currentPhoto: photo?.imageSrc,
+                    isOffline,
+                    initialFormValues: props.initialValues,
+                    setInitialFormValues,
+                  }}>
+                  <SearchByNID />
+                  {sections.map((section, index) => (
+                    <SectionWrapper
+                      key={`registration-section-${section.id}`}
+                      sectionDefinition={section}
+                      index={index}
                     />
-                  ) : inEditMode ? (
-                    t('updatePatient', 'Update Patient')
-                  ) : (
-                    t('registerPatient', 'Register Patient')
-                  )}
-                </Button>
-                <Button className={styles.cancelButton} kind="tertiary" onClick={cancelRegistration}>
-                  {t('cancel', 'Cancel')}
-                </Button>
+                  ))}
+                </PatientRegistrationContext.Provider>
               </div>
             </div>
-            <div className={styles.infoGrid}>
-              <PatientRegistrationContext.Provider
-                value={{
-                  identifierTypes: identifierTypes,
-                  validationSchema,
-                  values: props.values,
-                  inEditMode,
-                  setFieldValue: props.setFieldValue,
-                  setCapturePhotoProps,
-                  currentPhoto: photo?.imageSrc,
-                  isOffline,
-                  initialFormValues: props.initialValues,
-                  setInitialFormValues,
-                }}>
-                {sections.map((section, index) => (
-                  <SectionWrapper
-                    key={`registration-section-${section.id}`}
-                    sectionDefinition={section}
-                    index={index}
-                  />
-                ))}
-              </PatientRegistrationContext.Provider>
-            </div>
-          </div>
-        </Form>
-      )}
-    </Formik>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 
