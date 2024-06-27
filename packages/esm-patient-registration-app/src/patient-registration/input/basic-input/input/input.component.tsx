@@ -163,19 +163,19 @@ export const Input: React.FC<InputProps> = ({ checkWarning, ...props }) => {
 
   return (
     <div style={{ marginBottom: '1rem', position: 'relative' }}>
-      <Layer>
-        <TextInput
-          {...props}
-          {...field}
-          labelText={labelText}
-          invalid={!!(meta.touched && meta.error)}
-          invalidText={invalidText}
-          warn={!!warnText}
-          warnText={warnText}
-          value={value}
-          size="sm"
-        />
-      </Layer>
+      {/* <Layer> */}
+      <TextInput
+        {...props}
+        {...field}
+        labelText={labelText}
+        invalid={!!(meta.touched && meta.error)}
+        invalidText={invalidText}
+        warn={!!warnText}
+        warnText={warnText}
+        value={value}
+        size="sm"
+      />
+      {/* </Layer> */}
     </div>
   );
 };

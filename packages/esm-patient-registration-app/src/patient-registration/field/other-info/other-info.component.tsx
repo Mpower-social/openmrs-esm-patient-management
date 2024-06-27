@@ -1,4 +1,4 @@
-import { Column, Grid } from '@carbon/react';
+import { Column, Grid, Dropdown } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
 import { useField } from 'formik';
 import React, { useCallback, useContext, useEffect } from 'react';
@@ -7,8 +7,7 @@ import { type RegistrationConfig } from '../../../config-schema';
 import { generateFormatting } from '../../date-util';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
-import {SearchByNID} from '../../section/search-by-nid/search-by-nid.component'
-
+import { SearchByNID } from '../../section/search-by-nid/search-by-nid.component';
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
@@ -27,7 +26,22 @@ export function OtherInfo() {
     setFieldValue('registrationDate', new Date());
   }, []);
 
+  const itemGenders = [
+    { id: 'male', text: 'Male' },
+    { id: 'female', text: 'Female' },
+    { id: 'other', text: 'Other' },
+    { id: 'unknown', text: 'Unknown' },
+  ];
   const otherInputFields = [
+    <Dropdown
+      id="carbon-dropdown-example"
+      titleText="Gender"
+      size="sm"
+      label="Select an option"
+      items={itemGenders}
+      itemToString={(item) => (item ? item.text : '')}
+      onChange={(e) => setFieldValue('gender', e.selectedItem.id)}
+    />,
     <PersonAttributeField
       fieldDefinition={{
         id: 'mobileNo',
@@ -55,7 +69,7 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.bloodGroup.personAttributeUuid,
         showHeading: false,
         answerConceptSetUuid: '4c2a94c6-5a14-485e-b0f5-01921750b9b6',
-        label: 'Blood Group',
+        label: 'ব্লাড গ্রুপ',
       }}
     />,
     <PersonAttributeField
@@ -213,20 +227,10 @@ export function OtherInfo() {
         label: `Ethnicity`,
       }}
     />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'biometricID',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.biometricID.personAttributeUuid,
-        showHeading: false,
-        label: `Biometric ID`,
-      }}
-    />,
   ];
 
   return (
     <div>
-
       <Grid>
         {otherInputFields.map((field, index) => (
           <Column key={index} lg={4} md={4} sm={2}>

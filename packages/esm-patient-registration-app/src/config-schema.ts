@@ -151,7 +151,7 @@ export const builtInSections: Array<SectionDefinition> = [
   {
     id: 'demographics',
     name: 'Basic Info',
-    fields: ['name', 'gender', 'dob', 'id'],
+    fields: ['name', 'dob', 'id'],
   },
   // { id: "contact", name: "Contact Details", fields: ["address"] },
   { id: 'locations', name: 'Location Details', fields: ['locations'] },

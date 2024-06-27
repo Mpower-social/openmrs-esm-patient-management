@@ -92,30 +92,30 @@ export function CodedPersonAttributeField({
   return (
     <div>
       {!isLoadingConceptAnswers ? (
-        <Layer>
-          <Field name={fieldName}>
-            {({ field, form: { touched, errors }, meta }) => {
-              return (
-                <>
-                  <Select
-                    id={id}
-                    name={`person-attribute-${personAttributeType.uuid}`}
-                    labelText={labelText}
-                    invalid={errors[fieldName] && touched[fieldName]}
-                    size={'sm'}
-                    required={required}
-                    {...field}>
-                    <SelectItem value={''} text={t('selectAnOption', 'Select an option')} />
-                    {answers.map((answer) => (
-                      <SelectItem key={answer.uuid} value={answer.uuid} text={answer.label} />
-                    ))}
-                  </Select>
-                </>
-              );
-            }}
-          </Field>
-        </Layer>
-      ) : null}
+        // <Layer>
+        <Field name={fieldName}>
+          {({ field, form: { touched, errors }, meta }) => {
+            return (
+              <>
+                <Select
+                  id={id}
+                  name={`person-attribute-${personAttributeType.uuid}`}
+                  labelText={labelText}
+                  invalid={errors[fieldName] && touched[fieldName]}
+                  size={'sm'}
+                  required={required}
+                  {...field}>
+                  <SelectItem value={''} text={t('selectAnOption', 'Select an option')} />
+                  {answers.map((answer) => (
+                    <SelectItem key={answer.uuid} value={answer.uuid} text={answer.label} />
+                  ))}
+                </Select>
+              </>
+            );
+          }}
+        </Field>
+      ) : // </Layer>
+      null}
     </div>
   );
 }

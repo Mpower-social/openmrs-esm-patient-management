@@ -23,11 +23,11 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, 
 
   return (
     <div style={{ marginBottom: '1rem' }}>
-      <Layer>
-        <Select id="identifier" {...field} labelText={labelText}>
-          {selectOptions}
-        </Select>
-      </Layer>
+      {/* <Layer> */}
+      <Select id="identifier" {...field} labelText={labelText}>
+        {selectOptions}
+      </Select>
+      {/* </Layer> */}
     </div>
   );
 };
