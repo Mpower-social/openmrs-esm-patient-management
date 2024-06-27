@@ -1,14 +1,15 @@
-import { Column, Grid, Tile } from '@carbon/react';
-import { useConfig } from '@openmrs/esm-framework';
+import { Button, Column, Grid, Tile, Dropdown, DatePicker, DatePickerInput, Search, Row } from '@carbon/react';
+import { isDesktop,useLayoutType } from '@openmrs/esm-framework';
 import { useField } from 'formik';
-import React, { useCallback, useContext, useEffect,useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { getDataByNID } from '../../patient-registration.resource';
 import styles from '../../patient-registration.scss';
 
 export function SearchByNID() {
   const { setFieldValue, values } = useContext(PatientRegistrationContext);
-  const [searchBody,setSearchBody]=useState<any>()
+  const [searchBody, setSearchBody] = useState<any>();
+  const layout = useLayoutType();
 
   const getGender = (gender) => {
     switch (gender) {
@@ -27,13 +28,12 @@ export function SearchByNID() {
 
   function isLastRoutePatientRegistration() {
     const segments = window.location.pathname.split('/');
-    const lastSegment = segments.filter(segment => segment !== "").pop();
+    const lastSegment = segments.filter((segment) => segment !== '').pop();
     return lastSegment === 'patient-registration';
   }
 
   const searchByNIDHandler = async () => {
-
-    if (!isLastRoutePatientRegistration()) return;
+    if (!isLastRoutePatientRegistration() || Object.values(searchBody).filter(el=>el).length<3) return;
 
     const res = await getDataByNID({
       nidOrBrn: '6904959449',
@@ -42,9 +42,9 @@ export function SearchByNID() {
       hid: '98008214606',
     });
 
-    console.log(res,'dataaa')
-    const temp = res.data.personInformation
-   
+    console.log(res, 'dataaa');
+    const temp = res.data.personInformation;
+
     const attributesMapping = {
       '14d4f066-15f5-102d-96e4-000c29c2a5d7': temp.mobile,
       'c9aaba5b-9227-4e30-8067-a6c1f15b0174': temp.fullNameBangla,
@@ -78,13 +78,57 @@ export function SearchByNID() {
     searchByNIDHandler();
   }, []);
 
+  const items = [
+    { id: 'nid', text: 'NID' },
+    { id: 'hid', text: 'HID' },
+    { id: 'brid', text: 'BRID' },
+  ];
   return (
     <>
-    {isLastRoutePatientRegistration()&&
-      <Tile style={{marginBottom:"20px"}}>
-        <h3 className={styles.productiveHeading02} style={{ color: '#161616' }}>Search</h3>
-      </Tile>
-    }
+      {isLastRoutePatientRegistration() && (
+        <Tile  style={{ marginBottom: '20px' }}>
+          <div className={!isDesktop(layout) ? styles.tabletHeading : styles.desktopHeading}>
+          <h4>
+            Search
+          </h4>
+          </div>
+        
+          
+
+          <Grid>
+            <Column sm={8} md={8} lg={4}>
+              <Dropdown
+                id="carbon-dropdown-example"
+                titleText="ID Type"
+                label="Select an option"
+                items={items}
+                itemToString={(item) => (item ? item.text : '')}
+                onChange={(e) => setSearchBody({ ...searchBody, idType: e.selectedItem.id })}
+              />
+            </Column>
+            <Column sm={8} md={8} lg={4}>
+              <DatePicker datePickerType="single" onChange={(e) => setSearchBody({ ...searchBody, dob: new Date(e[0]).toLocaleDateString('en-CA')})}>
+                <DatePickerInput id="date-picker-default-id" placeholder="mm/dd/yyyy" labelText="DOB" type="text" />
+              </DatePicker>
+            </Column>
+            <Column sm={8} md={8} lg={5}>
+              <div style={{ paddingTop: '20px' }}>
+                <Search
+                  id="search-1"
+                  labelText="Text"
+                  placeHolderText="Text"
+                  onChange={(e) => setSearchBody({ ...searchBody, text: e.target.value })}
+                />
+              </div>
+            </Column>
+            <Column sm={8} md={8} lg={3}>
+              <div style={{ paddingTop: '10px' }}>
+                <Button onClick={searchByNIDHandler}>Search</Button>
+              </div>
+            </Column>
+          </Grid>
+        </Tile>
+      )}
     </>
   );
 }
