@@ -3,15 +3,14 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type FieldDefinition } from '../../../config-schema';
 import styles from '../field.scss';
-import { CodedPersonAttributeField } from '../person-attributes/coded-person-attribute-field.component';
 import { usePersonAttributeType } from '../person-attributes/person-attributes.resource';
-import { TextPersonAttributeField } from '../person-attributes/text-person-attribute-field.component';
+import { AddressLocationsCodedAttributeField } from './address-locations-coded-attribute-field.component';
 
 export interface CustomPersonAttributeFieldProps {
   fieldDefinition: FieldDefinition;
 }
 
-export function CustomPersonAttributeField({ fieldDefinition }: CustomPersonAttributeFieldProps) {
+export function AddressLocationsAttributeField({ fieldDefinition }: CustomPersonAttributeFieldProps) {
   const { data: personAttributeType, isLoading, error } = usePersonAttributeType(fieldDefinition.uuid);
   const { t } = useTranslation();
 
@@ -22,18 +21,7 @@ export function CustomPersonAttributeField({ fieldDefinition }: CustomPersonAttr
     switch (personAttributeType.format) {
       case 'java.lang.String':
         return (
-          <TextPersonAttributeField
-            personAttributeType={personAttributeType}
-            validationRegex={fieldDefinition.validation?.matches ?? ''}
-            label={fieldDefinition.label}
-            required={fieldDefinition.validation?.required ?? false}
-            id={fieldDefinition?.id}
-          />
-        );
-      case 'org.openmrs.Concept':
-      case 'org.openmrs.Encounter':
-        return (
-          <CodedPersonAttributeField
+          <AddressLocationsCodedAttributeField
             personAttributeType={personAttributeType}
             answerConceptSetUuid={fieldDefinition.answerConceptSetUuid}
             label={fieldDefinition.label}

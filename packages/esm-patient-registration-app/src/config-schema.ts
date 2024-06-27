@@ -69,6 +69,9 @@ export interface RegistrationConfig {
     nid: {
       personAttributeUuid: string;
     };
+    division: {
+      personAttributeUuid: string;
+    };
     brn: {
       personAttributeUuid: string;
     };
@@ -410,6 +413,21 @@ export const esmPatientRegistrationSchema = {
       },
       validation: {
         required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    division: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'f737da5f-d684-4eb8-884e-984e4c62cc0d',
+        _description: 'The UUID of the division attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
         matches: {
           _type: Type.String,
           _default: null,
