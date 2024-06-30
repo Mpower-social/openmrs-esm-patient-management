@@ -29,6 +29,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, 
     <div style={{ marginBottom: '1rem' }}>
       {/* <Layer> */}
       <Select
+        size="sm"
         id="identifier"
         disabled={disabled}
         {...field}

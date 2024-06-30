@@ -3,17 +3,21 @@ import { useConfig } from '@openmrs/esm-framework';
 import { useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
 import { type RegistrationConfig } from '../../../config-schema';
-import { AddressLocationsAttributeField } from '../address-locations-attributes/address-locations-attribute-field.component';
 import { useFetchLocations } from '../field.resource';
+import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
+import LocationField from './components/LocationField';
+import useLocationFetch from './hooks/useLocationFetch';
 
-type LocationType = 'division' | 'district' | 'upazila' | 'paurashava' | 'union' | 'ward';
+export type AddressLocationType = 'division' | 'district' | 'upazila' | 'paurashava' | 'union' | 'ward';
 
-const getLocationId = (arr: any[], locationName: string) =>
+export const getLocationId = (arr: any[], locationName: string) =>
   arr?.find((item) => item?.description === locationName)?.location_id;
 
 export function AddressLocations() {
   const config = useConfig<RegistrationConfig>();
   const { values, setFieldValue } = useFormikContext();
+
+  const getFieldValue = (name: string) => (values as any)?.attributes?.[name] ?? '';
 
   const { fetchData: fetchDivision, data: divisions, isLoading: divisionLoading } = useFetchLocations();
   const { fetchData: fetchDistrict, data: districts, isLoading: districtLoading } = useFetchLocations();
@@ -21,11 +25,6 @@ export function AddressLocations() {
   const { fetchData: fetchPaurashava, data: Paurashavas, isLoading: PaurashavaLoading } = useFetchLocations();
   const { fetchData: fetchUnion, data: Unions, isLoading: UnionLoading } = useFetchLocations();
   const { fetchData: fetchWard, data: Wards, isLoading: WardLoading } = useFetchLocations();
-
-  const resetCascadeFields = (fields: LocationType[]) =>
-    fields.forEach((name) => setFieldValue(`attributes.${name}`, ''));
-
-  const getFieldValue = (name: string) => (values as any)?.attributes?.[name] ?? '';
 
   const FIELDS = {
     DIVISION: config.fieldConfigurations.division.personAttributeUuid,
@@ -35,156 +34,110 @@ export function AddressLocations() {
     UNION: config.fieldConfigurations.union.personAttributeUuid,
     WARD: config.fieldConfigurations.ward.personAttributeUuid,
   };
-  // DIVISION fetching
-  useEffect(() => {
-    fetchDivision('24525');
-  }, []);
-
-  // DISTRICT fetching
-  useEffect(() => {
-    const filedValue = getFieldValue(FIELDS.DIVISION);
-    if (filedValue) {
-      const id = getLocationId(divisions.main, filedValue);
-      if (id) {
-        fetchDistrict(id);
-      }
-    }
-  }, [getFieldValue(FIELDS.DIVISION), divisions.main]);
-
-  // UPAZILA fetching
-  useEffect(() => {
-    const filedValue = getFieldValue(FIELDS.DISTRICT);
-    if (filedValue) {
-      const id = getLocationId(districts.main, filedValue);
-      if (id) {
-        fetchUpazila(id);
-      }
-    }
-  }, [getFieldValue(FIELDS.DISTRICT), districts.main]);
-
-  // PAURASHAVA fetching
-  useEffect(() => {
-    const filedValue = getFieldValue(FIELDS.UPAZILA);
-    if (filedValue) {
-      const id = getLocationId(Upazilas.main, filedValue);
-      if (id) {
-        fetchPaurashava(id);
-      }
-    }
-  }, [getFieldValue(FIELDS.UPAZILA), Upazilas.main]);
-
-  // UNION fetching
-  useEffect(() => {
-    const filedValue = getFieldValue(FIELDS.PAURASHAVA);
-    if (filedValue) {
-      const id = getLocationId(Paurashavas.main, filedValue);
-      if (id) {
-        fetchUnion(id);
-      }
-    }
-  }, [getFieldValue(FIELDS.PAURASHAVA), Paurashavas.main]);
-
-  // WARD fetching
-  useEffect(() => {
-    const filedValue = getFieldValue(FIELDS.UNION);
-    if (filedValue) {
-      const id = getLocationId(Unions.main, filedValue);
-      if (id) {
-        fetchWard(id);
-      }
-    }
-  }, [getFieldValue(FIELDS.UNION), Unions.main]);
-
-  const handleFieldChange = (
-    locationId: string,
-    resetFields: LocationType[],
-    fetchNext: (id: string) => void,
-    mainData: any[],
-  ) => {
-    resetCascadeFields(resetFields);
-    const location_id = getLocationId(mainData, locationId);
-    if (location_id && fetchNext) {
-      fetchNext(location_id);
-    }
-  };
 
   const fieldConfigurations = [
     {
-      id: 'division' as LocationType,
-      name: 'Division' as LocationType,
+      id: 'division' as AddressLocationType,
+      name: 'Division',
       fetchNext: fetchDistrict,
-      resetFields: [FIELDS.DISTRICT, FIELDS.UPAZILA, FIELDS.PAURASHAVA, FIELDS.UNION, FIELDS.WARD] as LocationType[],
+      resetFields: ['district', 'upazila', 'paurashava', 'union', 'ward'] as AddressLocationType[],
       data: divisions,
       loading: divisionLoading,
     },
     {
-      id: 'district' as LocationType,
-      name: 'District' as LocationType,
+      id: 'district' as AddressLocationType,
+      name: 'District',
       fetchNext: fetchUpazila,
-      resetFields: [FIELDS.UPAZILA, FIELDS.PAURASHAVA, FIELDS.UNION, FIELDS.WARD] as LocationType[],
+      resetFields: ['upazila', 'paurashava', 'union', 'ward'] as AddressLocationType[],
       data: districts,
       loading: districtLoading,
     },
     {
-      id: 'upazila' as LocationType,
-      name: 'Upazila' as LocationType,
+      id: 'upazila' as AddressLocationType,
+      name: 'Upazila',
       fetchNext: fetchPaurashava,
-      resetFields: [FIELDS.PAURASHAVA, FIELDS.UNION, FIELDS.WARD] as LocationType[],
+      resetFields: ['paurashava', 'union', 'ward'] as AddressLocationType[],
       data: Upazilas,
       loading: UpazilaLoading,
     },
     {
-      id: 'paurashava' as LocationType,
-      name: 'Paurashava' as LocationType,
+      id: 'paurashava' as AddressLocationType,
+      name: 'Paurashava',
       fetchNext: fetchUnion,
-      resetFields: [FIELDS.UNION, FIELDS.WARD] as LocationType[],
+      resetFields: ['union', 'ward'] as AddressLocationType[],
       data: Paurashavas,
       loading: PaurashavaLoading,
     },
     {
-      id: 'union' as LocationType,
-      name: 'Union' as LocationType,
+      id: 'union' as AddressLocationType,
+      name: 'Union',
       fetchNext: fetchWard,
-      resetFields: [FIELDS.WARD] as LocationType[],
+      resetFields: ['ward'] as AddressLocationType[],
       data: Unions,
       loading: UnionLoading,
     },
     {
-      id: 'ward' as LocationType,
-      name: 'Ward' as LocationType,
+      id: 'ward' as AddressLocationType,
+      name: 'Ward',
+      resetFields: [] as AddressLocationType[],
       data: Wards,
       loading: WardLoading,
     },
   ];
 
-  const otherInputFields = fieldConfigurations.map(({ id, fetchNext, resetFields, data, loading, name }) => (
-    <AddressLocationsAttributeField
-      key={id}
-      fieldDefinition={{
-        id,
-        type: 'person attribute',
-        uuid: FIELDS[id.toUpperCase() as keyof typeof FIELDS],
-        showHeading: false,
-        label: name,
-        customConceptAnswers: data?.processed ?? [],
-        ...config.fieldConfigurations[id],
-      }}
-      onChange={(locationId) => fetchNext && handleFieldChange(locationId, resetFields, fetchNext, data.main)}
-      disabled={loading}
-    />
-  ));
+  useEffect(() => {
+    fetchDivision('24525');
+  }, []);
 
-  return (
-    <div>
-      {!divisionLoading && (
-        <Grid>
-          {otherInputFields.map((field, index) => (
-            <Column key={index} lg={4} md={4} sm={2}>
-              {field}
-            </Column>
-          ))}
-        </Grid>
-      )}
-    </div>
-  );
+  useLocationFetch(getLocationId(divisions.main, getFieldValue(FIELDS.DIVISION)), fetchDistrict, [
+    divisions.main,
+    getFieldValue(FIELDS.DIVISION),
+  ]);
+  useLocationFetch(getLocationId(districts.main, getFieldValue(FIELDS.DISTRICT)), fetchUpazila, [
+    districts.main,
+    getFieldValue(FIELDS.DISTRICT),
+  ]);
+  useLocationFetch(getLocationId(Upazilas.main, getFieldValue(FIELDS.UPAZILA)), fetchPaurashava, [
+    Upazilas.main,
+    getFieldValue(FIELDS.UPAZILA),
+  ]);
+  useLocationFetch(getLocationId(Paurashavas.main, getFieldValue(FIELDS.PAURASHAVA)), fetchUnion, [
+    Paurashavas.main,
+    getFieldValue(FIELDS.PAURASHAVA),
+  ]);
+  useLocationFetch(getLocationId(Unions.main, getFieldValue(FIELDS.UNION)), fetchWard, [
+    Unions.main,
+    getFieldValue(FIELDS.UNION),
+  ]);
+
+  const finalInputFields = [
+    ...fieldConfigurations.map(({ id, name, fetchNext, resetFields, data, loading }) => (
+      <Column key={id} lg={4} md={4} sm={2}>
+        <LocationField
+          id={id}
+          name={name}
+          fetchNext={fetchNext}
+          resetFields={resetFields}
+          data={data}
+          loading={loading}
+          config={config}
+          setFieldValue={setFieldValue}
+        />
+      </Column>
+    )),
+    <Column lg={4} md={4} sm={2}>
+      <PersonAttributeField
+        fieldDefinition={{
+          id: 'patientAddress',
+          type: 'person attribute',
+          uuid: config.fieldConfigurations.patientAddress.personAttributeUuid,
+          showHeading: false,
+          label: 'Address',
+          ...config.fieldConfigurations.patientAddress,
+        }}
+      />
+    </Column>,
+  ];
+
+  return <div>{!divisionLoading && <Grid>{finalInputFields}</Grid>}</div>;
 }
