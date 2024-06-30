@@ -85,6 +85,9 @@ export interface RegistrationConfig {
     ward: {
       personAttributeUuid: string;
     };
+    patientAddress: {
+      personAttributeUuid: string;
+    };
     union: {
       personAttributeUuid: string;
     };
@@ -516,6 +519,21 @@ export const esmPatientRegistrationSchema = {
         _type: Type.UUID,
         _default: '59daac4e-635b-43f1-a3c2-4000a70ec75e',
         _description: 'The UUID of the 	ward attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    patientAddress: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'b7a0bb2e-74b9-4236-8b3d-f403cd53b32b',
+        _description: 'The UUID of the 	patientAddress attribute type',
       },
       validation: {
         required: { _type: Type.Boolean, _default: true },
