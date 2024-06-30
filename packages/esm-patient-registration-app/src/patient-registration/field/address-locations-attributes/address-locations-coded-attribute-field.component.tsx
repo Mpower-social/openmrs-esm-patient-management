@@ -37,7 +37,7 @@ export function AddressLocationsCodedAttributeField({
   return (
     <div>
       {!isLoading ? (
-        <Layer>
+        <>
           <SelectInput
             name={fieldName}
             label={label ?? personAttributeType?.display}
@@ -49,7 +49,7 @@ export function AddressLocationsCodedAttributeField({
             onChange={onChange}
             disabled={disabled}
           />
-        </Layer>
+        </>
       ) : null}
     </div>
   );
