@@ -31,7 +31,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, 
       <Select
         size="sm"
         id="identifier"
-        disabled={disabled}
+        readOnly={disabled}
         {...field}
         onChange={(e) => {
           field.onChange(e);
