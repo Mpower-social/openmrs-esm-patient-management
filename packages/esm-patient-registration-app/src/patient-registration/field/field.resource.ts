@@ -73,23 +73,29 @@ export function useAddressLocations(locationId: string): {
   };
 }
 
-interface LocationData {
-  uuid: string;
-  label: string;
-}
-
 interface FetchState {
-  data: LocationData[];
   isLoading: boolean;
+  data: {
+    main: {
+      location_id: number;
+      description: string;
+      parent_location: number;
+      location_tag_id: number;
+    }[];
+    processed: {
+      uuid: string;
+      label: string;
+    }[];
+  };
 }
 
 export function useFetchLocations() {
   const [res, setRes] = useState<FetchState>({
-    data: [],
+    data: { main: [], processed: [] },
     isLoading: true,
   });
 
-  const fetchData = async (locationId: string): Promise<void> => {
+  const fetchData = async (locationId: string | number): Promise<void> => {
     const url = `${restBaseUrl}/custom-location/childLocation?parentLocationIds=${locationId}`;
     const abortController = new AbortController();
 
@@ -108,11 +114,13 @@ export function useFetchLocations() {
 
       setRes((prev) => ({
         ...prev,
-        data:
-          data?.locations?.map((item: any) => ({
+        data: {
+          main: data?.locations ?? [],
+          processed: data?.locations?.map((item: any) => ({
             uuid: item.description,
             label: item.description,
-          })) ?? [],
+          })),
+        },
       }));
     } catch (error: any) {
       if (error.name === 'AbortError') {

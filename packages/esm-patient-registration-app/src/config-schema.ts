@@ -31,6 +31,7 @@ export interface Gender {
 }
 
 export interface RegistrationConfig {
+  district: any;
   sections: Array<string>;
   sectionDefinitions: Array<SectionDefinition>;
   fieldDefinitions: Array<FieldDefinition>;
@@ -70,6 +71,21 @@ export interface RegistrationConfig {
       personAttributeUuid: string;
     };
     division: {
+      personAttributeUuid: string;
+    };
+    district: {
+      personAttributeUuid: string;
+    };
+    upazila: {
+      personAttributeUuid: string;
+    };
+    paurashava: {
+      personAttributeUuid: string;
+    };
+    ward: {
+      personAttributeUuid: string;
+    };
+    union: {
       personAttributeUuid: string;
     };
     brn: {
@@ -425,6 +441,81 @@ export const esmPatientRegistrationSchema = {
         _type: Type.UUID,
         _default: 'f737da5f-d684-4eb8-884e-984e4c62cc0d',
         _description: 'The UUID of the division attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    district: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '836bbd5c-7794-4716-97d7-a3a61ebed982',
+        _description: 'The UUID of the district attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    upazila: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '29aeb2b3-5b6d-45b1-a8c1-307ca7e6167a',
+        _description: 'The UUID of the upazila attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    paurashava: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'a1f2cd6f-f76b-460f-b1a2-e5fc4b759387',
+        _description: 'The UUID of the 	paurashava attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    union: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '5d6ac3dd-1ac9-41b6-ae0a-e8a85a97a21c',
+        _description: 'The UUID of the 	union attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    ward: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '59daac4e-635b-43f1-a3c2-4000a70ec75e',
+        _description: 'The UUID of the 	ward attribute type',
       },
       validation: {
         required: { _type: Type.Boolean, _default: true },

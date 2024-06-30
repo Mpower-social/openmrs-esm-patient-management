@@ -8,9 +8,15 @@ import { AddressLocationsCodedAttributeField } from './address-locations-coded-a
 
 export interface CustomPersonAttributeFieldProps {
   fieldDefinition: FieldDefinition;
+  onChange?: Function;
+  disabled?: boolean;
 }
 
-export function AddressLocationsAttributeField({ fieldDefinition }: CustomPersonAttributeFieldProps) {
+export function AddressLocationsAttributeField({
+  fieldDefinition,
+  onChange,
+  disabled,
+}: CustomPersonAttributeFieldProps) {
   const { data: personAttributeType, isLoading, error } = usePersonAttributeType(fieldDefinition.uuid);
   const { t } = useTranslation();
 
@@ -28,6 +34,8 @@ export function AddressLocationsAttributeField({ fieldDefinition }: CustomPerson
             id={fieldDefinition?.id}
             required={fieldDefinition.validation?.required ?? false}
             customConceptAnswers={fieldDefinition.customConceptAnswers ?? []}
+            onChange={onChange}
+            disabled={disabled}
           />
         );
 
@@ -69,11 +77,13 @@ export function AddressLocationsAttributeField({ fieldDefinition }: CustomPerson
   }
 
   return (
-    <div>
-      {fieldDefinition.showHeading && (
-        <h4 className={styles.productiveHeading02Light}>{fieldDefinition?.label ?? personAttributeType?.display}</h4>
-      )}
-      {personAttributeField}
-    </div>
+    <>
+      <div>
+        {fieldDefinition.showHeading && (
+          <h4 className={styles.productiveHeading02Light}>{fieldDefinition?.label ?? personAttributeType?.display}</h4>
+        )}
+        {personAttributeField}
+      </div>
+    </>
   );
 }
