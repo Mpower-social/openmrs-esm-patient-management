@@ -10,23 +10,36 @@ const LocationField = ({
   data,
   loading,
   config,
+  fieldId,
   setFieldValue,
+  resetStates,
 }: {
   id: AddressLocationType;
   name: string;
+  fieldId?: string;
   fetchNext?: (id: string) => void;
-  resetFields: AddressLocationType[];
+  resetFields: string[];
   data: any;
   loading: boolean;
   config: any;
+  resetStates?: any[];
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
 }) => {
   const handleFieldChange = (locationId: string) => {
-    resetFields.forEach((field) => setFieldValue(`attributes.${field}`, ''));
     const location_id = getLocationId(data.main, locationId);
-    if (location_id && fetchNext) {
-      fetchNext(location_id);
+    resetFields.forEach((field) => setFieldValue(`attributes.${field}`, ''));
+
+    if (resetStates.length) {
+      resetStates.forEach((item) => item());
     }
+
+    if (fieldId) {
+      setFieldValue(`attributes.${fieldId}`, (location_id ?? '').toString());
+    }
+
+    // if (location_id && fetchNext) {
+    //   fetchNext(location_id);
+    // }
   };
 
   return (
