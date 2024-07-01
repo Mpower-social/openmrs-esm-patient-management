@@ -73,24 +73,43 @@ export interface RegistrationConfig {
     division: {
       personAttributeUuid: string;
     };
+    divisionId: {
+      personAttributeUuid: string;
+    };
     district: {
+      personAttributeUuid: string;
+    };
+    districtId: {
       personAttributeUuid: string;
     };
     upazila: {
       personAttributeUuid: string;
     };
+    upazilaId: {
+      personAttributeUuid: string;
+    };
     paurashava: {
       personAttributeUuid: string;
     };
-    ward: {
-      personAttributeUuid: string;
-    };
-    patientAddress: {
+    paurashavaId: {
       personAttributeUuid: string;
     };
     union: {
       personAttributeUuid: string;
     };
+    unionId: {
+      personAttributeUuid: string;
+    };
+    ward: {
+      personAttributeUuid: string;
+    };
+    wardId: {
+      personAttributeUuid: string;
+    };
+    patientAddress: {
+      personAttributeUuid: string;
+    };
+
     brn: {
       personAttributeUuid: string;
     };
@@ -454,6 +473,21 @@ export const esmPatientRegistrationSchema = {
         },
       },
     },
+    divisionId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '88f38dba-248f-428b-bbde-64096346bc65',
+        _description: 'The UUID of the divisionId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
     district: {
       personAttributeUuid: {
         _type: Type.UUID,
@@ -462,6 +496,21 @@ export const esmPatientRegistrationSchema = {
       },
       validation: {
         required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    districtId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '88bee94d-3b21-4412-a3f0-a638b5d50134',
+        _description: 'The UUID of the districtId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
         matches: {
           _type: Type.String,
           _default: null,
@@ -484,6 +533,21 @@ export const esmPatientRegistrationSchema = {
         },
       },
     },
+    upazilaId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '35f6cd31-02e2-4d7e-a55d-9a0e70239c18',
+        _description: 'The UUID of the upazilaId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
     paurashava: {
       personAttributeUuid: {
         _type: Type.UUID,
@@ -492,6 +556,21 @@ export const esmPatientRegistrationSchema = {
       },
       validation: {
         required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    paurashavaId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '3af2cba5-1495-4629-97cd-7546014107cf',
+        _description: 'The UUID of the 	paurashavaId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
         matches: {
           _type: Type.String,
           _default: null,
@@ -514,6 +593,21 @@ export const esmPatientRegistrationSchema = {
         },
       },
     },
+    unionId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'd04dc189-5826-4f0d-9df5-838f35dbd0f6',
+        _description: 'The UUID of the 	unionId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
     ward: {
       personAttributeUuid: {
         _type: Type.UUID,
@@ -522,6 +616,21 @@ export const esmPatientRegistrationSchema = {
       },
       validation: {
         required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    wardId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'e51c7415-0206-464e-9c79-b00fa847bc46',
+        _description: 'The UUID of the 	wardId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
         matches: {
           _type: Type.String,
           _default: null,

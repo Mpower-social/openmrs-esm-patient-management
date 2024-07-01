@@ -136,6 +136,11 @@ export function useFetchLocations() {
       setRes((prev) => ({ ...prev, isLoading: false }));
     }
   };
+  const resetState = () =>
+    setRes(() => ({
+      data: { main: [], processed: [] },
+      isLoading: true,
+    }));
 
-  return { fetchData, ...res };
+  return { fetchData, resetState, ...res };
 }
