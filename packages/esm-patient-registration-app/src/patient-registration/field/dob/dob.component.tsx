@@ -102,8 +102,9 @@ export const DobField: React.FC = () => {
           )}
         </Column>
         {/* <Layer> */}
+        
         {!dobUnknown ? (
-          <Column lg={5} md={5} sm={2}>
+          <Column lg={5} md={5} sm={2} style={{ marginTop: '10px' }}>
             <DatePicker dateFormat={dateFormat} datePickerType="single" onChange={onDateChange} maxDate={format(today)}>
               <DatePickerInput
                 id="birthdate"
@@ -119,7 +120,7 @@ export const DobField: React.FC = () => {
           </Column>
         ) : (
           <>
-            <Column lg={5} md={5} sm={4}>
+            <Column lg={5} md={5} sm={4} style={{ marginTop: '10px' }}>
               {/* <div className={styles.dobField}> */}
               {/* <Layer> */}
               <TextInput
@@ -140,7 +141,7 @@ export const DobField: React.FC = () => {
               {/* </Layer> */}
               {/* </div> */}
             </Column>
-            <Column lg={5} md={5} sm={4}>
+            <Column lg={5} md={5} sm={4} style={{ marginTop: '10px' }}>
               {/* <div className={styles.dobField}> */}
               {/* <Layer> */}
               <TextInput
