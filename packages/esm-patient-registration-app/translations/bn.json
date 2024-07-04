@@ -60,6 +60,7 @@
   "optional": "optional",
   "other": "Other",
   "patient": "Patient",
+  "patientNameKnown": "Patient's Name is Known?",
   "patientRegistrationBreadcrumb": "Patient Registration",
   "registerPatient": "Register Patient",
   "registerPatientNotSuccessSnackbarSubtitle": "Because data not able to save into costume database",

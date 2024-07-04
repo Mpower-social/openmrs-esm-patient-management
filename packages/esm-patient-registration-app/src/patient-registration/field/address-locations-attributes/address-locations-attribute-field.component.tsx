@@ -1,18 +1,22 @@
+import { InlineNotification, TextInputSkeleton } from '@carbon/react';
 import React, { useMemo } from 'react';
-import { InlineNotification, TextInputSkeleton, SkeletonText } from '@carbon/react';
-import { type FieldDefinition } from '../../../config-schema';
-import { CodedPersonAttributeField } from './coded-person-attribute-field.component';
-import { usePersonAttributeType } from './person-attributes.resource';
-import { DatePickerPersonAttributeField } from './date-picker-person-attribute-field.component';
-import { TextPersonAttributeField } from './text-person-attribute-field.component';
 import { useTranslation } from 'react-i18next';
+import { type FieldDefinition } from '../../../config-schema';
 import styles from '../field.scss';
+import { usePersonAttributeType } from '../person-attributes/person-attributes.resource';
+import { AddressLocationsCodedAttributeField } from './address-locations-coded-attribute-field.component';
 
-export interface PersonAttributeFieldProps {
+export interface CustomPersonAttributeFieldProps {
   fieldDefinition: FieldDefinition;
+  onChange?: Function;
+  disabled?: boolean;
 }
 
-export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldProps) {
+export function AddressLocationsAttributeField({
+  fieldDefinition,
+  onChange,
+  disabled,
+}: CustomPersonAttributeFieldProps) {
   const { data: personAttributeType, isLoading, error } = usePersonAttributeType(fieldDefinition.uuid);
   const { t } = useTranslation();
 
@@ -23,38 +27,18 @@ export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldPr
     switch (personAttributeType.format) {
       case 'java.lang.String':
         return (
-          <TextPersonAttributeField
-            personAttributeType={personAttributeType}
-            validationRegex={fieldDefinition.validation?.matches ?? ''}
-            label={fieldDefinition.label}
-            required={fieldDefinition.validation?.required ?? false}
-            id={fieldDefinition?.id}
-          />
-        );
-      case 'org.openmrs.Concept':
-      case 'org.openmrs.Encounter':
-        return (
-          <CodedPersonAttributeField
+          <AddressLocationsCodedAttributeField
             personAttributeType={personAttributeType}
             answerConceptSetUuid={fieldDefinition.answerConceptSetUuid}
             label={fieldDefinition.label}
             id={fieldDefinition?.id}
             required={fieldDefinition.validation?.required ?? false}
             customConceptAnswers={fieldDefinition.customConceptAnswers ?? []}
+            onChange={onChange}
+            disabled={disabled}
           />
         );
-      // case 'org.openmrs.util.AttributableDate':
-      // return (
-      //   <DatePickerPersonAttributeField
-      //     readOnly={fieldDefinition.readOnly}
-      //     defaultValue={fieldDefinition.defaultValue}
-      //     personAttributeType={personAttributeType}
-      //     label={fieldDefinition.label}
-      //     range={fieldDefinition.range}
-      //     required={fieldDefinition.validation?.required ?? false}
-      //     id={fieldDefinition?.id}
-      //   />
-      // );
+
       default:
         return (
           <InlineNotification kind="error" title="Error">
@@ -93,11 +77,13 @@ export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldPr
   }
 
   return (
-    <div>
-      {fieldDefinition.showHeading && (
-        <h4 className={styles.productiveHeading02Light}>{fieldDefinition?.label ?? personAttributeType?.display}</h4>
-      )}
-      {personAttributeField}
-    </div>
+    <>
+      <div>
+        {fieldDefinition.showHeading && (
+          <h4 className={styles.productiveHeading02Light}>{fieldDefinition?.label ?? personAttributeType?.display}</h4>
+        )}
+        {personAttributeField}
+      </div>
+    </>
   );
 }

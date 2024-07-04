@@ -1,20 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-import { Field } from 'formik';
 import { Layer, Select, SelectItem } from '@carbon/react';
+import { reportError } from '@openmrs/esm-framework';
+import { Field } from 'formik';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import LabelWithRequiredIndicator from '../../../components/LabelWithRequiredIndicator';
 import { type PersonAttributeTypeResponse } from '../../patient-registration.types';
 import { useConceptAnswers } from '../field.resource';
-import styles from './../field.scss';
-import { reportError } from '@openmrs/esm-framework';
 
 export interface CodedPersonAttributeFieldProps {
   id: string;
   personAttributeType: PersonAttributeTypeResponse;
   answerConceptSetUuid: string;
   label?: string;
+  required?: boolean;
   customConceptAnswers: Array<{ uuid: string; label?: string }>;
-  required: boolean;
 }
 
 export function CodedPersonAttributeField({
@@ -22,8 +21,8 @@ export function CodedPersonAttributeField({
   personAttributeType,
   answerConceptSetUuid,
   label,
-  customConceptAnswers,
   required,
+  customConceptAnswers,
 }: CodedPersonAttributeFieldProps) {
   const { data: conceptAnswers, isLoading: isLoadingConceptAnswers } = useConceptAnswers(
     customConceptAnswers.length ? '' : answerConceptSetUuid,
@@ -89,32 +88,34 @@ export function CodedPersonAttributeField({
     return null;
   }
 
+  const labelText = <LabelWithRequiredIndicator text={label ?? personAttributeType?.display} isRequired={required} />;
   return (
-    <div className={classNames(styles.customField, styles.halfWidthInDesktopView)}>
+    <div>
       {!isLoadingConceptAnswers ? (
-        <Layer>
-          <Field name={fieldName}>
-            {({ field, form: { touched, errors }, meta }) => {
-              return (
-                <>
-                  <Select
-                    id={id}
-                    name={`person-attribute-${personAttributeType.uuid}`}
-                    labelText={label ?? personAttributeType?.display}
-                    invalid={errors[fieldName] && touched[fieldName]}
-                    required={required}
-                    {...field}>
-                    <SelectItem value={''} text={t('selectAnOption', 'Select an option')} />
-                    {answers.map((answer) => (
-                      <SelectItem key={answer.uuid} value={answer.uuid} text={answer.label} />
-                    ))}
-                  </Select>
-                </>
-              );
-            }}
-          </Field>
-        </Layer>
-      ) : null}
+        // <Layer>
+        <Field name={fieldName}>
+          {({ field, form: { touched, errors }, meta }) => {
+            return (
+              <>
+                <Select
+                  id={id}
+                  name={`person-attribute-${personAttributeType.uuid}`}
+                  labelText={labelText}
+                  invalid={errors[fieldName] && touched[fieldName]}
+                  size={'sm'}
+                  required={required}
+                  {...field}>
+                  <SelectItem value={''} text={t('selectAnOption', 'Select an option')} />
+                  {answers.map((answer) => (
+                    <SelectItem key={answer.uuid} value={answer.uuid} text={answer.label} />
+                  ))}
+                </Select>
+              </>
+            );
+          }}
+        </Field>
+      ) : // </Layer>
+      null}
     </div>
   );
 }

@@ -150,16 +150,22 @@ export class FormManager {
     //saving data by custom api
     if (savePatientResponse.data?.uuid) {
       // Extract person data more concisely
-      const { person, uuid } = savePatientResponse.data;
+      const { person, uuid,identifiers } = savePatientResponse.data;
       // Transform attributes using destructuring and object spread syntax
       const tempAttributes = person.attributes.map(({ display }) => ({
         [display.split('=')[0].trim().replace(/ /g, '')]: display.split('=')[1].trimStart(),
       }));
 
+      console.log(savePatientResponse,'personperson')
+
       // Combine attributes and other data efficiently
+      
       const finalObject = {
         ...person,
         personUuid: uuid,
+        identifier:identifiers[0].display.split("=")[1].trim(),
+        firstName:person.display.split(" ")[0],
+        lastName:person.display.split(" ").slice(1).join(" "),
         location: 0,
         unionId: 0,
         wardId: 0,
