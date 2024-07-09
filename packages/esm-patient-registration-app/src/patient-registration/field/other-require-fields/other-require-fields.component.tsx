@@ -5,20 +5,23 @@ import { type RegistrationConfig } from '../../../config-schema';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
 import { SelectInput } from '../../input/basic-input/select/select-input.component';
 import { useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 export function OtherRequireFields() {
   const config = useConfig<RegistrationConfig>();
   const { values, setFieldValue } = useFormikContext();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    (values as any).gender&&setFieldValue(
-      'idType',
-      (values as any)?.attributes?.[config.fieldConfigurations.brn.personAttributeUuid]
-        ? 'brd'
-        : (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid]
-          ? 'nid'
-          : 'none',
-    );
+    (values as any).gender &&
+      setFieldValue(
+        'idType',
+        (values as any)?.attributes?.[config.fieldConfigurations.brn.personAttributeUuid]
+          ? 'brd'
+          : (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid]
+            ? 'nid'
+            : 'none',
+      );
   }, [
     (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid],
     (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid],
@@ -28,13 +31,13 @@ export function OtherRequireFields() {
     <SelectInput
       name="gender"
       options={[
-        { value: 'male', text: 'Male' },
-        { value: 'female', text: 'Female' },
-        { value: 'other', text: 'Other' },
-        { value: 'unknown', text: 'Unknown' },
+        { value: 'male', text: t('male', 'Male') },
+        { value: 'female', text: t('female', 'Female') },
+        { value: 'other', text: t('other', 'Other') },
+        { value: 'unknown', text: t('unknown', 'Unknown') },
       ]}
       required
-      label="Gender"
+      label={t('gender', 'Gender')}
     />,
 
     <PersonAttributeField
@@ -46,7 +49,7 @@ export function OtherRequireFields() {
         validation: {
           required: true,
         },
-        label: 'Mobile No',
+        label: t('mobileNo', 'Mobile No'),
       }}
     />,
     <PersonAttributeField
@@ -59,7 +62,7 @@ export function OtherRequireFields() {
           required: true,
         },
         answerConceptSetUuid: 'c955a699-5f57-4a92-a7e4-30c6215430e9',
-        label: 'Marital Status',
+        label: t('maritalStatus', 'Marital Status'),
       }}
     />,
     //"6e4a97f3-e6ab-4bf0-8fbd-8bf8b0361500" uuid of married concept
@@ -75,7 +78,7 @@ export function OtherRequireFields() {
           validation: {
             required: true,
           },
-          label: `Spouse's Name`,
+          label: t('spouseNameEnglish', `Spouse's Name`),
         }}
       />
     ),
@@ -89,7 +92,7 @@ export function OtherRequireFields() {
           type: 'person attribute',
           uuid: config.fieldConfigurations.spouseNameBangla.personAttributeUuid,
           showHeading: false,
-          label: `Spouse's Name in Bangla`,
+          label: t('spouseNameBangla', `Spouse's Name in Bangla`),
         }}
       />
     ),
@@ -103,7 +106,7 @@ export function OtherRequireFields() {
           required: true,
         },
         answerConceptSetUuid: '4c2a94c6-5a14-485e-b0f5-01921750b9b6',
-        label: 'Blood Group',
+        label: t('bloodGroup', 'Blood Group'),
       }}
     />,
     <PersonAttributeField
@@ -116,7 +119,7 @@ export function OtherRequireFields() {
           required: true,
         },
         answerConceptSetUuid: '43eee45a-082e-4216-8107-9f9e1977330b',
-        label: 'Religion',
+        label: t('religion', 'Religion'),
       }}
     />,
     <SelectInput
@@ -124,7 +127,7 @@ export function OtherRequireFields() {
       options={[
         { value: 'nid', text: 'NID' },
         { value: 'brn', text: 'BRN' },
-        { value: 'none', text: 'None' },
+        { value: 'none', text: t('none', 'None') },
       ]}
       defaultValue={'nid'}
       required={
@@ -133,7 +136,7 @@ export function OtherRequireFields() {
           ? false
           : true
       }
-      label="Id Type"
+      label={t('idType', 'Id Type')}
     />,
     ((values as any)?.idType === 'nid' ||
       (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid]) && (
@@ -146,7 +149,7 @@ export function OtherRequireFields() {
           validation: {
             required: true,
           },
-          label: 'NID',
+          label: t('nid', 'NID'),
         }}
       />
     ),
@@ -161,7 +164,7 @@ export function OtherRequireFields() {
           validation: {
             required: true,
           },
-          label: 'Birth Registration Number',
+          label: t('brn', 'Birth Registration Number'),
         }}
       />
     ),
@@ -174,7 +177,7 @@ export function OtherRequireFields() {
         validation: {
           required: true,
         },
-        label: 'Full Name in Bangla',
+        label: t('fullNameBangla', 'Full Name in Bangla'),
       }}
     />,
     <PersonAttributeField
@@ -186,7 +189,7 @@ export function OtherRequireFields() {
         validation: {
           required: true,
         },
-        label: `Mother's Name`,
+        label: t('motherName', `Mother's Name`),
       }}
     />,
     <PersonAttributeField
@@ -195,7 +198,7 @@ export function OtherRequireFields() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.motherNameBangla.personAttributeUuid,
         showHeading: false,
-        label: `Mother's Name in Bangla`,
+        label: t('motherNameBangla', `Mother's Name in Bangla`),
       }}
     />,
     <PersonAttributeField
@@ -207,7 +210,7 @@ export function OtherRequireFields() {
         validation: {
           required: true,
         },
-        label: `Father's Name`,
+        label: t('fatherNameEnglish', `Father's Name`),
       }}
     />,
     <PersonAttributeField
@@ -216,7 +219,7 @@ export function OtherRequireFields() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.fatherNameBangla.personAttributeUuid,
         showHeading: false,
-        label: `Father's Name in Bangla`,
+        label: t('fatherNameBangla', `Father's Name in Bangla`),
       }}
     />,
   ].filter(Boolean);

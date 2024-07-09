@@ -3,22 +3,13 @@ import { useConfig } from '@openmrs/esm-framework';
 import React from 'react';
 import { type RegistrationConfig } from '../../../config-schema';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
+import { useTranslation } from 'react-i18next';
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
+  const { t } = useTranslation();
 
   const otherInputFields = [
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'maritalStatus',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.maritalStatus.personAttributeUuid,
-        showHeading: false,
-        answerConceptSetUuid: 'c955a699-5f57-4a92-a7e4-30c6215430e9',
-
-        label: 'Marital Status',
-      }}
-    />,
     <PersonAttributeField
       fieldDefinition={{
         id: 'bloodGroup',
@@ -26,17 +17,7 @@ export function OtherInfo() {
         uuid: config.fieldConfigurations.bloodGroup.personAttributeUuid,
         showHeading: false,
         answerConceptSetUuid: '4c2a94c6-5a14-485e-b0f5-01921750b9b6',
-        label: 'Blood Group',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'religion',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.religion.personAttributeUuid,
-        showHeading: false,
-        answerConceptSetUuid: '43eee45a-082e-4216-8107-9f9e1977330b',
-        label: 'Religion',
+        label: t('bloodGroup', 'Blood Group'),
       }}
     />,
     <PersonAttributeField
@@ -45,7 +26,7 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.birthPlace.personAttributeUuid,
         showHeading: false,
-        label: `Birth Place`,
+        label: t('birthPlace', 'Birth Place'),
       }}
     />,
     <PersonAttributeField
@@ -54,7 +35,7 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.nationality.personAttributeUuid,
         showHeading: false,
-        label: `Nationality`,
+        label: t('nationality', 'Nationality'),
       }}
     />,
     <PersonAttributeField
@@ -63,7 +44,7 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.occupation.personAttributeUuid,
         showHeading: false,
-        label: `Occupation`,
+        label: t('occupation', 'Occupation'),
       }}
     />,
     <PersonAttributeField
@@ -72,35 +53,17 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.eduQualification.personAttributeUuid,
         showHeading: false,
-        label: `Educational Qualification`,
+        label: t('eduQualification', 'Educational Qualification'),
       }}
     />,
-    <PersonAttributeField
-      fieldDefinition={{
-        hide:true,
-        id: 'spouseNameBangla',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.spouseNameBangla.personAttributeUuid,
-        showHeading: false,
-        label: `Spouse's Name in Bangla`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'spouseNameEnglish',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.spouseNameEnglish.personAttributeUuid,
-        showHeading: false,
-        label: `Spouse's Name`,
-      }}
-    />,
+
     <PersonAttributeField
       fieldDefinition={{
         id: 'disabilityType',
         type: 'person attribute',
         uuid: config.fieldConfigurations.disabilityType.personAttributeUuid,
         showHeading: false,
-        label: `Disability Type`,
+        label: t('disabilityType', 'Disability Type'),
       }}
     />,
     <PersonAttributeField
@@ -109,7 +72,7 @@ export function OtherInfo() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.ethnicity.personAttributeUuid,
         showHeading: false,
-        label: `Ethnicity`,
+        label: t('ethnicity', 'Ethnicity'),
       }}
     />,
   ];
