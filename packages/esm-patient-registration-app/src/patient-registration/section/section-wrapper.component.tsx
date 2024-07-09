@@ -27,9 +27,9 @@ export const SectionWrapper = ({ sectionDefinition, index }: SectionWrapperProps
       <h3 className={styles.productiveHeading02} style={{ color: '#161616' }}>
         {index + 1}. {t(`${sectionDefinition.id}Section`, sectionDefinition.name)}
       </h3>
-      <span className={styles.label01}>
+      {/* <span className={styles.label01}>
         {t('allFieldsRequiredText', 'All fields are required unless marked optional')}
-      </span>
+      </span> */}
       
       <div style={{ margin: '1rem 0 1rem' }}>
         <Tile>

@@ -78,7 +78,7 @@ export const NameField = () => {
   );
 
   const middleNameField = displayMiddleName && (
-    <Column lg={5} md={4} sm={2}>
+    <Column lg={6} md={4} sm={2}>
       <Input
         id="middleName"
         name="middleName"
@@ -102,12 +102,11 @@ export const NameField = () => {
 
   return (
     <div>
-      <h4 className={styles.productiveHeading02Light}>{t('fullNameLabelText', 'Full Name')}</h4>
-      <div>
+      {/* <h4 className={styles.productiveHeading02Light}>{t('fullNameLabelText', 'Full Name')}</h4> */}
         <Grid>
-          {(allowUnidentifiedPatients || isPatientUnknown) && (
+          {/* {(allowUnidentifiedPatients || isPatientUnknown) && (
             <Column lg={5} md={4} sm={2}>
-              {/* <div className={styles.dobContentSwitcherLabel}>
+               <div className={styles.dobContentSwitcherLabel}>
                 <span className={styles.label01}>{t('patientNameKnown', "Patient's Name is Known?")}</span>
               </div>
               <ContentSwitcher
@@ -116,19 +115,19 @@ export const NameField = () => {
                 onChange={toggleNameKnown}>
                 <Switch name="known" text={t('yes', 'Yes')} />
                 <Switch name="unknown" text={t('no', 'No')} />
-              </ContentSwitcher> */}
+              </ContentSwitcher> 
             </Column>
           )}
-          <Column lg={5} md={4} sm={2}></Column>
-          <Column lg={5} md={4} sm={2}>
-            {/* {displayCapturePhoto && (
+          <Column lg={5} md={4} sm={2}></Column> */}
+          {/* <Column lg={5} md={4} sm={2}>
+             {displayCapturePhoto && (
               <ExtensionSlot
                 className={styles.photoExtension}
                 name="capture-patient-photo-slot"
                 state={{ onCapturePhoto, initialState: currentPhoto }}
               />
-            )} */}
-          </Column>
+            )} 
+          </Column> */}
           {!isPatientUnknown &&
             (!displayReverseFieldOrder ? (
               <>
@@ -144,7 +143,6 @@ export const NameField = () => {
               </>
             ))}
         </Grid>
-      </div>
     </div>
   );
 };

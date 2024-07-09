@@ -18,6 +18,7 @@ export interface FieldDefinition {
     required: boolean;
     matches?: string;
   };
+  hide?:boolean;
   answerConceptSetUuid?: string;
   customConceptAnswers?: Array<CustomConceptAnswer>;
 }
@@ -192,7 +193,7 @@ export const builtInSections: Array<SectionDefinition> = [
   {
     id: 'demographics',
     name: 'Basic Info',
-    fields: ['name', 'dob', 'id'],
+    fields: ['name', 'dob', 'otherRequireFields','id'],
   },
   // { id: "contact", name: "Contact Details", fields: ["address"] },
   { id: 'locations', name: 'Location Details', fields: ['locations'] },
@@ -206,7 +207,7 @@ export const builtInFields = [
   'gender',
   'dob',
   'id',
-  // "address",
+  "otherRequireFields",
   'locations',
   'phone',
   'otherInfo',

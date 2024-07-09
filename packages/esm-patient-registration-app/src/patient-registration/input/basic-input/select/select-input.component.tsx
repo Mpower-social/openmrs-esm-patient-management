@@ -11,9 +11,10 @@ interface SelectInputProps {
   required?: boolean;
   onChange?: Function;
   disabled?: boolean;
+  defaultValue?:any;
 }
 
-export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, required, onChange, disabled }) => {
+export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, required, onChange, disabled,defaultValue}) => {
   const [field] = useField(name);
   const { t } = useTranslation();
   const selectOptions = [
@@ -32,6 +33,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({ name, options, label, 
         size="sm"
         id="identifier"
         readOnly={disabled}
+        required={required??false}
         {...field}
         onChange={(e) => {
           field.onChange(e);

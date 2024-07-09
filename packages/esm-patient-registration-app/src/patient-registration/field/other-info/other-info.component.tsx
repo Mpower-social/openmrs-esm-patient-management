@@ -1,51 +1,13 @@
 import { Column, Grid, Dropdown, SelectItem } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
-import { useField } from 'formik';
-import React, { useCallback, useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { type RegistrationConfig } from '../../../config-schema';
-import { generateFormatting } from '../../date-util';
-import { PatientRegistrationContext } from '../../patient-registration-context';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
-import { SelectInput } from '../../input/basic-input/select/select-input.component';
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
-  const { t } = useTranslation();
-  const { setFieldValue, values } = useContext(PatientRegistrationContext);
-  const [registrationDate, registrationDateMeta] = useField('registrationDate');
-  const { format, placeHolder, dateFormat } = generateFormatting(['d', 'm', 'Y'], '/');
-  const onDateChange = useCallback(
-    (registrationDate: Date[]) => {
-      setFieldValue('registrationDate', registrationDate[0]);
-    },
-    [setFieldValue],
-  );
-
-  useEffect(() => {
-    setFieldValue('registrationDate', new Date());
-  }, []);
 
   const otherInputFields = [
-    <SelectInput
-      name="gender"
-      options={[
-        { value: 'male', text: 'Male' },
-        { value: 'female', text: 'Female' },
-        { value: 'other', text: 'Other' },
-        { value: 'unknown', text: 'Unknown' },
-      ]}
-      label="Gender"
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'mobileNo',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.phone.personAttributeUuid,
-        showHeading: false,
-        label: 'Mobile No',
-      }}
-    />,
     <PersonAttributeField
       fieldDefinition={{
         id: 'maritalStatus',
@@ -79,82 +41,10 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
-        id: 'nid',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.nid.personAttributeUuid,
-        showHeading: false,
-        validation: {
-          required: true,
-        },
-        label: 'NID',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'brn',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.brn.personAttributeUuid,
-        showHeading: false,
-        label: 'Birth Registration Number',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fullNameBangla',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fullNameBangla.personAttributeUuid,
-        showHeading: false,
-        label: 'Full Name in Bangla',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'motherName',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.motherName.personAttributeUuid,
-        showHeading: false,
-        validation: {
-          required: true,
-        },
-        label: `Mother's Name`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'motherNameBangla',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.motherNameBangla.personAttributeUuid,
-        showHeading: false,
-        label: `Mother's Name in Bangla`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fatherNameEnglish',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fatherNameEnglish.personAttributeUuid,
-        showHeading: false,
-        label: `Father's Name`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'fatherNameBangla',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.fatherNameBangla.personAttributeUuid,
-        showHeading: false,
-        label: `Father's Name in Bangla`,
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
         id: 'birthPlace',
         type: 'person attribute',
         uuid: config.fieldConfigurations.birthPlace.personAttributeUuid,
         showHeading: false,
-        validation: {
-          required: true,
-        },
         label: `Birth Place`,
       }}
     />,
@@ -187,6 +77,7 @@ export function OtherInfo() {
     />,
     <PersonAttributeField
       fieldDefinition={{
+        hide:true,
         id: 'spouseNameBangla',
         type: 'person attribute',
         uuid: config.fieldConfigurations.spouseNameBangla.personAttributeUuid,
