@@ -24,10 +24,16 @@ export const SectionWrapper = ({ sectionDefinition, index }: SectionWrapperProps
    * t('locationsSection', 'Location Details')
    * t('otherInfoSection', 'Other Information')
    */
+  const numberLocalization=(num:number)=>{
+    let temp=num.toString().split("");
+    temp=temp.map(el=>t(el.toString(),el.toString()))
+    return temp.join("");
+  }
+  
   return (
     <div id={sectionDefinition.id} style={{ scrollMarginTop: '4rem' }}>
       <h3 className={styles.productiveHeading02} style={{ color: '#161616' }}>
-        {index + 1}. {t(`${sectionDefinition.id}Section`, sectionDefinition.name)}
+        {numberLocalization(index+1)}. {t(`${sectionDefinition.id}Section`, sectionDefinition.name)}
       </h3>
       {/* <span className={styles.label01}>
         {t('allFieldsRequiredText', 'All fields are required unless marked optional')}
