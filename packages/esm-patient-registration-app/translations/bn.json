@@ -127,6 +127,8 @@
   "dob":"জন্ম তারিখ",
   "birthDate":"জন্ম তারিখ",
   "search":"অনুসন্ধান",
-  "id":"আইডি"
+  "id":"আইডি",
+  "locationsSection":"ঠিকানা বিবরণ",
+  "otherInfoSection":"অন্যান্য তথ্য"
 
 }

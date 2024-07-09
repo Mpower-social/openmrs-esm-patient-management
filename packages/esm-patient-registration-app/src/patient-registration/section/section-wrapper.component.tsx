@@ -21,6 +21,8 @@ export const SectionWrapper = ({ sectionDefinition, index }: SectionWrapperProps
    * t('contactSection', 'Contact Details')
    * t('deathSection', 'Death Info')
    * t('relationshipsSection', 'Relationships')
+   * t('locationsSection', 'Location Details')
+   * t('otherInfoSection', 'Other Information')
    */
   return (
     <div id={sectionDefinition.id} style={{ scrollMarginTop: '4rem' }}>
