@@ -213,7 +213,7 @@ export function AddressLocations() {
           ...config.fieldConfigurations.patientAddress,
         }}
       />
-    </Column>,
+    </Column>
   ];
 
   return <div>{!divisionLoading && <Grid>{finalInputFields}</Grid>}</div>;

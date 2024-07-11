@@ -155,11 +155,7 @@ export class FormManager {
       const tempAttributes = person.attributes.map(({ display }) => ({
         [display.split('=')[0].trim().replace(/ /g, '')]: display.split('=')[1].trimStart(),
       }));
-
-      console.log(savePatientResponse,'personperson')
-
       // Combine attributes and other data efficiently
-      
       const finalObject = {
         ...person,
         personUuid: uuid,
@@ -167,8 +163,9 @@ export class FormManager {
         firstName:person.display.split(" ")[0],
         lastName:person.display.split(" ").slice(1).join(" "),
         location: 0,
-        unionId: 0,
-        wardId: 0,
+        person:0,
+        countryId:'24525',
+        country:'Bangladesh',     
         ...Object.assign({}, ...tempAttributes),
       };
 
