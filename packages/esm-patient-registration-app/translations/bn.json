@@ -160,5 +160,9 @@
   "totalItems":"মোট আইটেম",
   "itemsPerPage:":"প্রতি পাতায় আইটেম :",
   "pageRangeText":"`নং পৃষ্ঠা ${t(total,total)} টির মধ্যে`",
-  "sarchByName/NID/BRID/Mobile":"নাম/এনআইডি/বিআরআইডি/মোবাইল দ্বারা অনুসন্ধান"
+  "sarchByName/NID/BRID/Mobile":"নাম/এনআইডি/বিআরআইডি/মোবাইল দ্বারা অনুসন্ধান",
+  "otherAddress":" ঠিকানা(বাড়ি নম্বর/রাস্তা নম্বর)",
+  "serviceForm":"সেবা ফর্ম",
+  "serviceHistory":"সেবার ইতিহাস",
+  "profile":"প্রোফাইল"
 }
