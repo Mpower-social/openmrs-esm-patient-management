@@ -41,7 +41,6 @@ export function SearchByNID() {
       const res = await getDataByNID(searchBody);
       const temp = res.data.personInformation;
 
-      console.log("temp",temp)
       if(temp.fullNameEnglish){
         showSnackbar({subtitle:"Textfield fill with basic information.",title:"Information Found", kind: 'success'})
 
@@ -112,7 +111,7 @@ export function SearchByNID() {
             </Column>
             <Column sm={8} md={8} lg={4}>
               <DatePicker
-              disabled ={true}
+                readOnly ={searchBody?.type==="brid"&&true}
                 datePickerType="single"
                 onChange={(e) => setSearchBody({ ...searchBody, dob: new Date(e[0]).toLocaleDateString('en-CA') })}>
                 <DatePickerInput id="date-picker-default-id" placeholder="mm/dd/yyyy" labelText="DOB" type="text" />
