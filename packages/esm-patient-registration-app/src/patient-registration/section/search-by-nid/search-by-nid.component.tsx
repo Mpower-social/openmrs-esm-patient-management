@@ -41,9 +41,9 @@ export function SearchByNID() {
       const res = await getDataByNID(searchBody);
       const temp = res.data.personInformation;
 
-
-      if(temp){
-        showSnackbar({subtitle:"Textfield fill with basic information",title:"Information Found", kind: 'success'})
+      console.log("temp",temp)
+      if(temp.fullNameEnglish){
+        showSnackbar({subtitle:"Textfield fill with basic information.",title:"Information Found", kind: 'success'})
 
         const attributesMapping = {
           '14d4f066-15f5-102d-96e4-000c29c2a5d7': temp.mobile,
@@ -71,7 +71,7 @@ export function SearchByNID() {
           setFieldValue(`attributes[${uuid}]`, value);
         });
       }else{
-        showSnackbar({subtitle:"No information available",title:"Not Found", kind: 'error'})
+        showSnackbar({subtitle:"No information available.",title:"Not Found", kind: 'error'})
       }
 
     
