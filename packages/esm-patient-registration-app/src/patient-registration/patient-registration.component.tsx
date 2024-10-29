@@ -112,8 +112,8 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
         // throw new Error('Something went wrong!');
         showSnackbar({
           subtitle: inEditMode
-            ? t('updatePatientNotSuccessSnackbarSubtitle', 'Because data not able to update from costume database')
-            : t('registerPatientNotSuccessSnackbarSubtitle', 'Because data not able to save into costume database'),
+            ? t('updatePatientNotSuccessSnackbarSubtitle', 'Because data not able to update from custom database')
+            : t('registerPatientNotSuccessSnackbarSubtitle', 'Because data not able to save into custom database'),
           title: inEditMode
             ? t('updatePatientNotSuccessSnackbarTitle', 'Patient Details Updated Failed')
             : t('registerPatientNotSuccessSnackbarTitle', 'Patient Registration Failed'),

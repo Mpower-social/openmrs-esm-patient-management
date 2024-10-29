@@ -1,5 +1,5 @@
-import { Button, Column, Grid, Tile, Dropdown, DatePicker, DatePickerInput, Search, Loading} from '@carbon/react';
-import { isDesktop, useLayoutType,showSnackbar} from '@openmrs/esm-framework';
+import { Button, Column, Grid, Tile, Dropdown, DatePicker, DatePickerInput, Search, Loading } from '@carbon/react';
+import { isDesktop, useLayoutType, showSnackbar } from '@openmrs/esm-framework';
 import { useField } from 'formik';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
@@ -41,8 +41,12 @@ export function SearchByNID() {
       const res = await getDataByNID(searchBody);
       const temp = res.data.personInformation;
 
-      if(temp.fullNameEnglish){
-        showSnackbar({subtitle:"Textfield fill with basic information.",title:"Information Found", kind: 'success'})
+      if (temp.fullNameEnglish) {
+        showSnackbar({
+          subtitle: 'Textfield fill with basic information.',
+          title: 'Information Found',
+          kind: 'success',
+        });
 
         const attributesMapping = {
           '14d4f066-15f5-102d-96e4-000c29c2a5d7': temp.mobile,
@@ -54,26 +58,25 @@ export function SearchByNID() {
           '26ad0d0b-d6c3-4c78-a4b7-4d4e04bc9e86': temp.nationality,
           '041dcab7-ac07-41aa-928a-1f13e7c65c34': temp.citizenNid,
         };
-  
+
         const defaultValues = {
           gender: getGender(temp.gender),
           givenName: temp.fullNameEnglish.split(' ')[0],
           familyName: temp.fullNameEnglish.split(' ').slice(1).join(' '),
           birthdate: new Date(temp.dob),
         };
-  
+
         Object.entries(defaultValues).forEach(([key, value]) => {
           setFieldValue(key, value);
         });
-  
+
         Object.entries(attributesMapping).forEach(([uuid, value]) => {
           setFieldValue(`attributes[${uuid}]`, value);
         });
-      }else{
-        showSnackbar({subtitle:"No information available.",title:"Not Found", kind: 'error'})
+      } else {
+        showSnackbar({ subtitle: 'No information available.', title: 'Not Found', kind: 'error' });
       }
 
-    
       setLoadingSet(false);
     } catch (e) {
       setLoadingSet(false);
@@ -111,7 +114,7 @@ export function SearchByNID() {
             </Column>
             <Column sm={8} md={8} lg={4}>
               <DatePicker
-                readOnly ={searchBody?.type==="brid"&&true}
+                readOnly={searchBody?.type === 'brid' && true}
                 datePickerType="single"
                 onChange={(e) => setSearchBody({ ...searchBody, dob: new Date(e[0]).toLocaleDateString('en-CA') })}>
                 <DatePickerInput id="date-picker-default-id" placeholder="mm/dd/yyyy" labelText="DOB" type="text" />
@@ -121,8 +124,8 @@ export function SearchByNID() {
               <div style={{ paddingTop: '20px' }}>
                 <Search
                   id="search-1"
-                  labelText="Text"
-                  placeHolderText="Text"
+                  labelText="ID"
+                  placeHolderText="ID"
                   onChange={(e) => setSearchBody({ ...searchBody, text: e.target.value })}
                 />
               </div>
