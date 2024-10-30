@@ -36,6 +36,7 @@ export function OtherInfo() {
         { value: 'unknown', text: 'Unknown' },
       ]}
       label="Gender"
+      required={true}
     />,
     <PersonAttributeField
       fieldDefinition={{

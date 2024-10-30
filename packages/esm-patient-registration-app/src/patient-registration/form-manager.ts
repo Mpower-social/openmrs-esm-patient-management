@@ -150,26 +150,28 @@ export class FormManager {
     //saving data by custom api
     if (savePatientResponse.data?.uuid) {
       // Extract person data more concisely
-      const { person, uuid,identifiers } = savePatientResponse.data;
+      const { person, uuid, identifiers } = savePatientResponse.data;
       // Transform attributes using destructuring and object spread syntax
-      const tempAttributes = person.attributes.map(({ display }) => ({
+      let tempAttributes = person.attributes.map(({ display }) => ({
         [display.split('=')[0].trim().replace(/ /g, '')]: display.split('=')[1].trimStart(),
       }));
+      tempAttributes = Object.assign({}, ...tempAttributes);
+      const keysOfTempAttributes = Object.keys(tempAttributes);
 
-      console.log(savePatientResponse,'personperson')
-
+      // Set default values if not present
+      ['location', 'unionId', 'wardId', 'countryId', 'blockId'].forEach((key) => {
+        if (!keysOfTempAttributes.includes(key) || tempAttributes[key] === null) {
+          tempAttributes[key] = 0;
+        }
+      });
       // Combine attributes and other data efficiently
-      
       const finalObject = {
         ...person,
         personUuid: uuid,
-        identifier:identifiers[0].display.split("=")[1].trim(),
-        firstName:person.display.split(" ")[0],
-        lastName:person.display.split(" ").slice(1).join(" "),
-        location: 0,
-        unionId: 0,
-        wardId: 0,
-        ...Object.assign({}, ...tempAttributes),
+        identifier: identifiers[0].display.split('=')[1].trim(),
+        firstName: person.display.split(' ')[0],
+        lastName: person.display.split(' ').slice(1).join(' '),
+        ...tempAttributes,
       };
 
       try {
