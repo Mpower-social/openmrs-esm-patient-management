@@ -4,24 +4,12 @@ import React from 'react';
 import { type RegistrationConfig } from '../../../config-schema';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
 import { useTranslation } from 'react-i18next';
-import { SelectInput } from '../../input/basic-input/select/select-input.component';
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
   const { t } = useTranslation();
 
   const otherInputFields = [
-    <SelectInput
-      name="gender"
-      options={[
-        { value: 'male', text: 'Male' },
-        { value: 'female', text: 'Female' },
-        { value: 'other', text: 'Other' },
-        { value: 'unknown', text: 'Unknown' },
-      ]}
-      label="Gender"
-      required={true}
-    />,
     <PersonAttributeField
       fieldDefinition={{
         id: 'mobileNo',
