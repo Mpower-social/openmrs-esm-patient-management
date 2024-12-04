@@ -1,7 +1,7 @@
 import { Button, Column, Grid, Tile, Dropdown, DatePicker, DatePickerInput, Search, Loading } from '@carbon/react';
 import { isDesktop, useLayoutType, showSnackbar } from '@openmrs/esm-framework';
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { getDataByNID } from '../../patient-registration.resource';
 import styles from '../../patient-registration.scss';
@@ -138,7 +138,7 @@ export function SearchByNID() {
             </Column>
             <Column sm={8} md={8} lg={3}>
               <div style={{ paddingTop: '10px' }}>
-                <Button onClick={searchByNIDHandler}>{t('search', 'Text')}</Button>
+                <Button onClick={searchByNIDHandler}>{t('Search', 'Search')}</Button>
               </div>
             </Column>
           </Grid>

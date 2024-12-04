@@ -50,7 +50,6 @@
   "genderUnspecified": "Gender is not specified",
   "givenNameLabelText": "First Name",
   "givenNameRequired": "Given name is required",
-  "id": "ID",
   "identifierValueRequired": "Identifier value is required",
   "idFieldLabelText": "Identifiers",
   "IDInstructions": "Select the identifiers you'd like to add for this patient:",
@@ -98,7 +97,8 @@
   "religion": "Religion",
   "resetIdentifierTooltip": "Reset",
   "restoreRelationshipActionButton": "Undo",
-  "search": "Text",
+  "search": "search",
+  "Search": "Search",
   "searchAddress": "Search address",
   "searchIdentifierPlaceholder": "Search identifier",
   "selectAnOption": "Select an option",
@@ -118,7 +118,5 @@
   "updatePatientSuccessSnackbarSubtitle": "The patient's information has been successfully updated",
   "updatePatientSuccessSnackbarTitle": "Patient Details Updated",
   "yearsEstimateRequired": "Years estimate required",
-  "yes": "Yes",
-  "search":"search",
-  "Search":"Search"
+  "yes": "Yes"
 }
