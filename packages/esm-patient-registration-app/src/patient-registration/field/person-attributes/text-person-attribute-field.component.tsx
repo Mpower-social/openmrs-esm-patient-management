@@ -11,6 +11,7 @@ export interface TextPersonAttributeFieldProps {
   label?: string;
   required?: boolean;
   disabled?: boolean;
+  hide?:boolean;
 }
 
 export function TextPersonAttributeField({
@@ -20,6 +21,7 @@ export function TextPersonAttributeField({
   label,
   required,
   disabled,
+  hide
 }: TextPersonAttributeFieldProps) {
   const { t } = useTranslation();
 
@@ -38,7 +40,7 @@ export function TextPersonAttributeField({
   const fieldName = `attributes.${personAttributeType.uuid}`;
 
   return (
-    <div>
+    !hide&& <div>
       <Field name={fieldName} validate={validateInput}>
         {({ field, form: { touched, errors }, meta }) => {
           return (

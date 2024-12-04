@@ -107,7 +107,7 @@ export function CodedPersonAttributeField({
                   {...field}>
                   <SelectItem value={''} text={t('selectAnOption', 'Select an option')} />
                   {answers.map((answer) => (
-                    <SelectItem key={answer.uuid} value={answer.uuid} text={answer.label} />
+                    <SelectItem key={answer.uuid} value={answer.uuid} text={t(answer.label.toLowerCase().replace(/ /g,''),answer.label)} />
                   ))}
                 </Select>
               </>

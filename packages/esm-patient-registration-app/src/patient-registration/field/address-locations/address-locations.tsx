@@ -3,6 +3,7 @@ import { useConfig } from '@openmrs/esm-framework';
 import { useFormikContext } from 'formik';
 
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { type RegistrationConfig } from '../../../config-schema';
 import { useFetchLocations } from '../field.resource';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
@@ -17,6 +18,7 @@ export const getLocationId = (arr: any[], locationName: string) =>
 export function AddressLocations() {
   const config = useConfig<RegistrationConfig>();
   const { values, setFieldValue } = useFormikContext();
+  const { t } = useTranslation();
 
   const getFieldValue = (name: string) => (values as any)?.attributes?.[name];
 
@@ -41,7 +43,10 @@ export function AddressLocations() {
   } = useFetchLocations();
 
   const { fetchData: fetchUnion, data: Unions, isLoading: UnionLoading, resetState: resetUnion } = useFetchLocations();
+
   const { fetchData: fetchWard, data: Wards, isLoading: WardLoading, resetState: resetWard } = useFetchLocations();
+  const { fetchData: fetchBlock, data: Blocks, isLoading: BlockLoading, resetState: resetBlock } = useFetchLocations();
+
   const getConceptId = (name: string) => config.fieldConfigurations[name].personAttributeUuid;
 
   const FIELDS = {
@@ -57,12 +62,14 @@ export function AddressLocations() {
     UNION_ID: getConceptId('unionId'),
     WARD: getConceptId('ward'),
     WARD_ID: getConceptId('wardId'),
+    BLOCK: getConceptId('block'),
+    BLOCK_ID: getConceptId('blockId'),
   };
 
   const fieldConfigurations = [
     {
       id: 'division' as AddressLocationType,
-      name: 'Division',
+      name: t('division', 'Division'),
       fieldId: FIELDS.DIVISION_ID,
       fetchNext: fetchDistrict,
       resetFields: [
@@ -76,6 +83,8 @@ export function AddressLocations() {
         FIELDS.UNION_ID,
         FIELDS.WARD,
         FIELDS.WARD_ID,
+        FIELDS.BLOCK,
+        FIELDS.BLOCK_ID,
       ],
       resetStates: [resetDistrict, resetUpazila, resetPaurashava, resetUnion, resetWard],
       data: divisions,
@@ -83,7 +92,7 @@ export function AddressLocations() {
     },
     {
       id: 'district' as AddressLocationType,
-      name: 'District',
+      name: t('district', 'District'),
       fieldId: FIELDS.DISTRICT_ID,
       fetchNext: fetchUpazila,
       resetFields: [
@@ -95,6 +104,8 @@ export function AddressLocations() {
         FIELDS.UNION_ID,
         FIELDS.WARD,
         FIELDS.WARD_ID,
+        FIELDS.BLOCK,
+        FIELDS.BLOCK_ID,
       ],
       resetStates: [resetUpazila, resetPaurashava, resetUnion, resetWard],
       data: districts,
@@ -102,7 +113,7 @@ export function AddressLocations() {
     },
     {
       id: 'upazila' as AddressLocationType,
-      name: 'Upazila',
+      name: t('upazila', 'Upazila'),
       fieldId: FIELDS.UPAZILA_ID,
       fetchNext: fetchPaurashava,
       resetFields: [
@@ -112,6 +123,8 @@ export function AddressLocations() {
         FIELDS.UNION_ID,
         FIELDS.WARD,
         FIELDS.WARD_ID,
+        FIELDS.BLOCK,
+        FIELDS.BLOCK_ID,
       ],
       resetStates: [resetPaurashava, resetUnion, resetWard],
       data: Upazilas,
@@ -119,10 +132,10 @@ export function AddressLocations() {
     },
     {
       id: 'paurashava' as AddressLocationType,
-      name: 'Paurashava',
+      name: t('paurashava', 'Paurashava'),
       fieldId: FIELDS.PAURASHAVA_ID,
       fetchNext: fetchUnion,
-      resetFields: [FIELDS.UNION, FIELDS.UNION_ID, FIELDS.WARD, FIELDS.WARD_ID],
+      resetFields: [FIELDS.UNION, FIELDS.UNION_ID, FIELDS.WARD, FIELDS.WARD_ID, FIELDS.BLOCK, FIELDS.BLOCK_ID],
       resetStates: [resetUnion, resetWard],
       data: Paurashavas,
       loading:
@@ -131,10 +144,10 @@ export function AddressLocations() {
     },
     {
       id: 'union' as AddressLocationType,
-      name: 'Union',
+      name: t('union', 'Union'),
       fetchNext: fetchWard,
       fieldId: FIELDS.UNION_ID,
-      resetFields: [FIELDS.WARD, FIELDS.WARD_ID],
+      resetFields: [FIELDS.WARD, FIELDS.WARD_ID, FIELDS.BLOCK, FIELDS.BLOCK_ID],
       resetStates: [resetWard],
       data: Unions,
       loading:
@@ -146,10 +159,10 @@ export function AddressLocations() {
     },
     {
       id: 'ward' as AddressLocationType,
-      name: 'Ward',
+      name: t('ward', 'Ward'),
       fieldId: FIELDS.WARD_ID,
-      resetFields: [],
-      resetStates: [],
+      resetFields: [FIELDS.BLOCK, FIELDS.BLOCK_ID],
+      resetStates: [resetBlock],
       data: Wards,
       loading:
         WardLoading ||
@@ -157,6 +170,21 @@ export function AddressLocations() {
           !getFieldValue(FIELDS.DISTRICT) &&
           !getFieldValue(FIELDS.UPAZILA) &&
           !getFieldValue(FIELDS.UNION)),
+    },
+    {
+      id: 'block' as AddressLocationType,
+      name: t('block', 'Block'),
+      fieldId: FIELDS.BLOCK_ID,
+      resetFields: [],
+      resetStates: [],
+      data: Blocks,
+      loading:
+        BlockLoading ||
+        (!getFieldValue(FIELDS.DIVISION) &&
+          !getFieldValue(FIELDS.DISTRICT) &&
+          !getFieldValue(FIELDS.UPAZILA) &&
+          !getFieldValue(FIELDS.UNION) &&
+          !getFieldValue(FIELDS.WARD)),
     },
   ];
 
@@ -180,9 +208,14 @@ export function AddressLocations() {
     Paurashavas.main,
     getFieldValue(FIELDS.PAURASHAVA),
   ]);
+
   useLocationFetch(getLocationId(Unions.main, getFieldValue(FIELDS.UNION)), fetchWard, [
     Unions.main,
     getFieldValue(FIELDS.UNION),
+  ]);
+  useLocationFetch(getLocationId(Wards.main, getFieldValue(FIELDS.WARD)), fetchBlock, [
+    Wards.main,
+    getFieldValue(FIELDS.WARD),
   ]);
 
   const finalInputFields = [
@@ -209,7 +242,7 @@ export function AddressLocations() {
           type: 'person attribute',
           uuid: config.fieldConfigurations.patientAddress.personAttributeUuid,
           showHeading: false,
-          label: 'Address',
+          label: t('otherAddress', 'Address (House No. /Street No.'),
           ...config.fieldConfigurations.patientAddress,
         }}
       />

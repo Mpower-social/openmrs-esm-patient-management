@@ -106,7 +106,6 @@ export const PatientRegistration: React.FC<PatientRegistrationProps> = ({ savePa
 
         const afterUrl = new URLSearchParams(search).get('afterUrl');
         const redirectUrl = interpolateUrl(afterUrl || config.links.submitButton, { patientUuid: values.patientUuid });
-
         setTarget(redirectUrl);
       } else {
         // throw new Error('Something went wrong!');

@@ -10,6 +10,8 @@ import { Identifiers } from './id/id-field.component';
 import { NameField } from './name/name-field.component';
 import { OtherInfo } from './other-info/other-info.component';
 import { PhoneField } from './phone/phone-field.component';
+import { OtherRequireFields } from './other-require-fields/other-require-fields.component';
+
 
 export interface FieldProps {
   name: string;
@@ -47,6 +49,8 @@ export function Field({ name }: FieldProps) {
       return <PhoneField />;
     case 'otherInfo':
       return <OtherInfo />;
+    case 'otherRequireFields':
+      return <OtherRequireFields />;
     default:
       return <CustomField name={name} />;
   }

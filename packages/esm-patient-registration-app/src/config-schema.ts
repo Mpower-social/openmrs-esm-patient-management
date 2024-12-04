@@ -18,6 +18,7 @@ export interface FieldDefinition {
     required: boolean;
     matches?: string;
   };
+  hide?: boolean;
   answerConceptSetUuid?: string;
   customConceptAnswers?: Array<CustomConceptAnswer>;
 }
@@ -94,6 +95,7 @@ export interface RegistrationConfig {
     paurashavaId: {
       personAttributeUuid: string;
     };
+
     union: {
       personAttributeUuid: string;
     };
@@ -104,6 +106,12 @@ export interface RegistrationConfig {
       personAttributeUuid: string;
     };
     wardId: {
+      personAttributeUuid: string;
+    };
+    block: {
+      personAttributeUuid: string;
+    };
+    blockId: {
       personAttributeUuid: string;
     };
     patientAddress: {
@@ -192,7 +200,7 @@ export const builtInSections: Array<SectionDefinition> = [
   {
     id: 'demographics',
     name: 'Basic Info',
-    fields: ['name', 'dob', 'id'],
+    fields: ['name', 'dob', 'otherRequireFields', 'id'],
   },
   // { id: "contact", name: "Contact Details", fields: ["address"] },
   { id: 'locations', name: 'Location Details', fields: ['locations'] },
@@ -206,7 +214,7 @@ export const builtInFields = [
   'gender',
   'dob',
   'id',
-  // "address",
+  'otherRequireFields',
   'locations',
   'phone',
   'otherInfo',
@@ -638,6 +646,36 @@ export const esmPatientRegistrationSchema = {
         },
       },
     },
+    block: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'aeaf2d54-a3a5-4dc1-8a14-92bbba9e0344',
+        _description: 'The UUID of the block attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    blockId: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'afbade4d-f62c-441b-9f40-91de43fdf9b3',
+        _description: 'The UUID of the 	blockId attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
     patientAddress: {
       personAttributeUuid: {
         _type: Type.UUID,
@@ -645,7 +683,7 @@ export const esmPatientRegistrationSchema = {
         _description: 'The UUID of the 	patientAddress attribute type',
       },
       validation: {
-        required: { _type: Type.Boolean, _default: true },
+        required: { _type: Type.Boolean, _default: false },
         matches: {
           _type: Type.String,
           _default: null,

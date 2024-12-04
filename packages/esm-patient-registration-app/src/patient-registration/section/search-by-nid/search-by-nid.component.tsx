@@ -1,7 +1,7 @@
 import { Button, Column, Grid, Tile, Dropdown, DatePicker, DatePickerInput, Search, Loading } from '@carbon/react';
 import { isDesktop, useLayoutType, showSnackbar } from '@openmrs/esm-framework';
-import { useField } from 'formik';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import React, { useContext, useEffect, useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { getDataByNID } from '../../patient-registration.resource';
 import styles from '../../patient-registration.scss';
@@ -11,6 +11,7 @@ export function SearchByNID() {
   const [searchBody, setSearchBody] = useState<any>();
   const [loading, setLoadingSet] = useState(false);
   const layout = useLayoutType();
+  const { t } = useTranslation();
 
   const getGender = (gender) => {
     switch (gender) {
@@ -99,14 +100,14 @@ export function SearchByNID() {
       {isLastRoutePatientRegistration() && (
         <Tile style={{ marginBottom: '20px' }}>
           <div className={!isDesktop(layout) ? styles.tabletHeading : styles.desktopHeading}>
-            <h4>Search</h4>
+            <h4>{t('search', 'Search')}</h4>
           </div>
           <Grid>
             <Column sm={8} md={8} lg={4}>
               <Dropdown
                 id="carbon-dropdown-example"
-                titleText="ID Type"
-                label="Select an option"
+                titleText={t('idType', 'ID Type')}
+                label={t('selectAnOption', 'Select an option')}
                 items={items}
                 itemToString={(item) => (item ? item.text : '')}
                 onChange={(e) => setSearchBody({ ...searchBody, type: e.selectedItem.id })}
@@ -117,7 +118,12 @@ export function SearchByNID() {
                 readOnly={searchBody?.type === 'brid' && true}
                 datePickerType="single"
                 onChange={(e) => setSearchBody({ ...searchBody, dob: new Date(e[0]).toLocaleDateString('en-CA') })}>
-                <DatePickerInput id="date-picker-default-id" placeholder="mm/dd/yyyy" labelText="DOB" type="text" />
+                <DatePickerInput
+                  id="date-picker-default-id"
+                  placeholder="mm/dd/yyyy"
+                  labelText={t('dob', 'DOB')}
+                  type="text"
+                />
               </DatePicker>
             </Column>
             <Column sm={8} md={8} lg={5}>
@@ -132,7 +138,7 @@ export function SearchByNID() {
             </Column>
             <Column sm={8} md={8} lg={3}>
               <div style={{ paddingTop: '10px' }}>
-                <Button onClick={searchByNIDHandler}>Search</Button>
+                <Button onClick={searchByNIDHandler}>{t('Search', 'Search')}</Button>
               </div>
             </Column>
           </Grid>
