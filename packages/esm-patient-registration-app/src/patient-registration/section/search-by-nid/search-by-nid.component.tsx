@@ -42,9 +42,9 @@ export function SearchByNID() {
       const res = await getDataByNID(searchBody);
       const temp = res.data.personInformation;
 
-      if (temp) {
+      if (temp.fullNameEnglish) {
         showSnackbar({
-          subtitle: 'Textfield fill with basic information',
+          subtitle: 'Textfield fill with basic information.',
           title: 'Information Found',
           kind: 'success',
         });
@@ -75,7 +75,7 @@ export function SearchByNID() {
           setFieldValue(`attributes[${uuid}]`, value);
         });
       } else {
-        showSnackbar({ subtitle: 'No information available', title: 'Not Found', kind: 'error' });
+        showSnackbar({ subtitle: 'No information available.', title: 'Not Found', kind: 'error' });
       }
 
       setLoadingSet(false);
@@ -115,7 +115,7 @@ export function SearchByNID() {
             </Column>
             <Column sm={8} md={8} lg={4}>
               <DatePicker
-                disabled={true}
+                readOnly={searchBody?.type === 'brid' && true}
                 datePickerType="single"
                 onChange={(e) => setSearchBody({ ...searchBody, dob: new Date(e[0]).toLocaleDateString('en-CA') })}>
                 <DatePickerInput
@@ -129,8 +129,9 @@ export function SearchByNID() {
             <Column sm={8} md={8} lg={5}>
               <div style={{ paddingTop: '20px' }}>
                 <Search
-                  labelText="Text"
-                  placeHolder={t('id', 'ID')}
+                  id="search-1"
+                  labelText="ID"
+                  placeHolderText="ID"
                   onChange={(e) => setSearchBody({ ...searchBody, text: e.target.value })}
                 />
               </div>

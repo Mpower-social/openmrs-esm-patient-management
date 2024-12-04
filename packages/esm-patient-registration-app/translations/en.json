@@ -82,7 +82,7 @@
   "patient": "Patient",
   "patientRegistrationBreadcrumb": "Patient Registration",
   "registerPatient": "Register Patient",
-  "registerPatientNotSuccessSnackbarSubtitle": "Because data not able to save into costume database",
+  "registerPatientNotSuccessSnackbarSubtitle": "Because data not able to save into custom database",
   "registerPatientNotSuccessSnackbarTitle": "Patient Registration Failed",
   "registerPatientSuccessSnackbarSubtitle": "The patient can now be found by searching for them using their name or ID number",
   "registerPatientSuccessSnackbarTitle": "New Patient Created",
@@ -118,5 +118,7 @@
   "updatePatientSuccessSnackbarSubtitle": "The patient's information has been successfully updated",
   "updatePatientSuccessSnackbarTitle": "Patient Details Updated",
   "yearsEstimateRequired": "Years estimate required",
-  "yes": "Yes"
+  "yes": "Yes",
+  "search":"search",
+  "Search":"Search"
 }

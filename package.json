@@ -14,8 +14,8 @@
     "verify": "turbo lint typescript test --concurrency=1",
     "test-e2e": "playwright test",
     "postinstall": "husky install",
-    "app": "yarn start --sources packages/esm-patient-registration-app/ --backend https://openmrs-o3.mpower-social.com",
-    "app2": "yarn start --sources packages/esm-patient-registration-app/",
+    "dev": "yarn start --sources packages/esm-patient-registration-app/ --backend https://openmrs-o3.mpower-social.com",
+    "dev2": "yarn start --sources packages/esm-patient-registration-app/",
     "esm": "yarn up openmrs@next @openmrs/esm-framework@next"
   },
   "dependencies": {
