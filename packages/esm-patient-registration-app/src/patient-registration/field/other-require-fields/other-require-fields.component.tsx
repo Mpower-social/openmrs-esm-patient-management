@@ -1,11 +1,11 @@
-import { Column, Grid, Dropdown, SelectItem } from '@carbon/react';
+import { Column, Grid } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
-import React, { useEffect, useState } from 'react';
-import { type RegistrationConfig } from '../../../config-schema';
-import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
-import { SelectInput } from '../../input/basic-input/select/select-input.component';
 import { useFormikContext } from 'formik';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { type RegistrationConfig } from '../../../config-schema';
+import { SelectInput } from '../../input/basic-input/select/select-input.component';
+import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
 
 export function OtherRequireFields() {
   const config = useConfig<RegistrationConfig>();
@@ -24,7 +24,7 @@ export function OtherRequireFields() {
       );
   }, [
     (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid],
-    (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid],
+    (values as any)?.attributes?.[config.fieldConfigurations.brn.personAttributeUuid],
   ]);
 
   const otherInputFields = [

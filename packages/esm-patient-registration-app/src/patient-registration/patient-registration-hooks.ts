@@ -3,10 +3,11 @@ import {
   type OpenmrsResource,
   getSynchronizationItems,
   openmrsFetch,
+  restBaseUrl,
   useConfig,
   usePatient,
-  restBaseUrl,
 } from '@openmrs/esm-framework';
+import dayjs from 'dayjs';
 import camelCase from 'lodash-es/camelCase';
 import { type Dispatch, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
@@ -14,22 +15,21 @@ import { v4 } from 'uuid';
 import { type RegistrationConfig } from '../config-schema';
 import { patientRegistration } from '../constants';
 import {
-  type FormValues,
-  type PatientRegistration,
-  type PatientUuidMapType,
-  type PersonAttributeResponse,
-  type PatientIdentifierResponse,
-  type Encounter,
-} from './patient-registration.types';
-import {
   getAddressFieldValuesFromFhirPatient,
   getFormValuesFromFhirPatient,
   getPatientUuidMapFromFhirPatient,
   getPhonePersonAttributeValueFromFhirPatient,
   latestFirstEncounter,
 } from './patient-registration-utils';
+import {
+  type Encounter,
+  type FormValues,
+  type PatientIdentifierResponse,
+  type PatientRegistration,
+  type PatientUuidMapType,
+  type PersonAttributeResponse,
+} from './patient-registration.types';
 import { useInitialPatientRelationships } from './section/patient-relationships/relationships.resource';
-import dayjs from 'dayjs';
 
 export function useInitialFormValues(patientUuid: string): [FormValues, Dispatch<FormValues>] {
   const { isLoading: isLoadingPatientToEdit, patient: patientToEdit } = usePatient(patientUuid);
@@ -37,6 +37,7 @@ export function useInitialFormValues(patientUuid: string): [FormValues, Dispatch
   const { data: identifiers, isLoading: isLoadingIdentifiers } = useInitialPatientIdentifiers(patientUuid);
   const { data: relationships, isLoading: isLoadingRelationships } = useInitialPatientRelationships(patientUuid);
   const { data: encounters } = useInitialEncounters(patientUuid, patientToEdit);
+  const config = useConfig<RegistrationConfig>();
 
   const [initialFormValues, setInitialFormValues] = useState<FormValues>({
     patientUuid: v4(),

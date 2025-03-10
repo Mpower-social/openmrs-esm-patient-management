@@ -1,34 +1,15 @@
-import { Column, Grid, Dropdown, SelectItem } from '@carbon/react';
+import { Column, Grid } from '@carbon/react';
 import { useConfig } from '@openmrs/esm-framework';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { type RegistrationConfig } from '../../../config-schema';
 import { PersonAttributeField } from '../person-attributes/person-attribute-field.component';
-import { useTranslation } from 'react-i18next';
 
 export function OtherInfo() {
   const config = useConfig<RegistrationConfig>();
   const { t } = useTranslation();
 
   const otherInputFields = [
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'mobileNo',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.phone.personAttributeUuid,
-        showHeading: false,
-        label: 'Mobile No',
-      }}
-    />,
-    <PersonAttributeField
-      fieldDefinition={{
-        id: 'bloodGroup',
-        type: 'person attribute',
-        uuid: config.fieldConfigurations.bloodGroup.personAttributeUuid,
-        showHeading: false,
-        answerConceptSetUuid: '4c2a94c6-5a14-485e-b0f5-01921750b9b6',
-        label: t('bloodGroup', 'Blood Group'),
-      }}
-    />,
     <PersonAttributeField
       fieldDefinition={{
         id: 'birthPlace',
