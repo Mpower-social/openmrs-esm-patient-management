@@ -623,7 +623,7 @@ export const esmPatientRegistrationSchema = {
         _description: 'The UUID of the 	ward attribute type',
       },
       validation: {
-        required: { _type: Type.Boolean, _default: true },
+        required: { _type: Type.Boolean, _default: false },
         matches: {
           _type: Type.String,
           _default: null,
@@ -653,7 +653,7 @@ export const esmPatientRegistrationSchema = {
         _description: 'The UUID of the block attribute type',
       },
       validation: {
-        required: { _type: Type.Boolean, _default: true },
+        required: { _type: Type.Boolean, _default: false },
         matches: {
           _type: Type.String,
           _default: null,
