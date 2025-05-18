@@ -1,7 +1,7 @@
-import { Button, Column, Grid, Tile, Dropdown, DatePicker, DatePickerInput, Search, Loading } from '@carbon/react';
-import { isDesktop, useLayoutType, showSnackbar } from '@openmrs/esm-framework';
+import { Button, Column, DatePicker, DatePickerInput, Dropdown, Grid, Loading, Search, Tile } from '@carbon/react';
+import { isDesktop, showSnackbar, useLayoutType } from '@openmrs/esm-framework';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import React, { useContext, useEffect, useState } from 'react';
 import { PatientRegistrationContext } from '../../patient-registration-context';
 import { getDataByNID } from '../../patient-registration.resource';
 import styles from '../../patient-registration.scss';
@@ -81,16 +81,17 @@ export function SearchByNID() {
       setLoadingSet(false);
     } catch (e) {
       setLoadingSet(false);
+      showSnackbar({
+        subtitle: e.message,
+        title: 'Error',
+        kind: 'error',
+      });
     }
   };
 
-  useEffect(() => {
-    //searchByNIDHandler();
-  }, []);
-
   const items = [
     { id: 'nid', text: 'NID' },
-    { id: 'hid', text: 'HID' },
+    { id: 'hid', text: 'SHR ID' },
     { id: 'brid', text: 'BRID' },
   ];
   return (

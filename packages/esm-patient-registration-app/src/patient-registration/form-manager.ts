@@ -7,34 +7,34 @@ import {
   queueSynchronizationItem,
   restBaseUrl,
 } from '@openmrs/esm-framework';
+import { type RegistrationConfig } from '../config-schema';
 import { patientRegistration } from '../constants';
 import {
-  type FormValues,
-  type AttributeValue,
-  type PatientUuidMapType,
-  type Patient,
-  type CapturePhotoProps,
-  type PatientIdentifier,
-  type PatientRegistration,
-  type RelationshipValue,
-  type Encounter,
-} from './patient-registration.types';
-import {
   addPatientIdentifier,
+  deletePatient,
   deletePatientIdentifier,
   deletePersonName,
   deleteRelationship,
   generateIdentifier,
+  saveEncounter,
   savePatient,
+  savePatientIntoOpenSRP,
   savePatientPhoto,
   saveRelationship,
-  updateRelationship,
   updatePatientIdentifier,
-  saveEncounter,
-  savePatientIntoOpenSRP,
-  deletePatient,
+  updateRelationship,
 } from './patient-registration.resource';
-import { type RegistrationConfig } from '../config-schema';
+import {
+  type AttributeValue,
+  type CapturePhotoProps,
+  type Encounter,
+  type FormValues,
+  type Patient,
+  type PatientIdentifier,
+  type PatientRegistration,
+  type PatientUuidMapType,
+  type RelationshipValue,
+} from './patient-registration.types';
 
 export type SavePatientForm = (
   isNewPatient: boolean,
@@ -351,6 +351,26 @@ export class FormManager {
       birthdate = values.birthdate;
     }
 
+    const customAddress = (payload) => {
+      const mapper = {
+        'f737da5f-d684-4eb8-884e-984e4c62cc0d': 'stateProvince', //division
+        '836bbd5c-7794-4716-97d7-a3a61ebed982': 'countyDistrict', //District
+        '29aeb2b3-5b6d-45b1-a8c1-307ca7e6167a': 'address2', //Upazila
+        'a1f2cd6f-f76b-460f-b1a2-e5fc4b759387': 'address6', //Paurashava
+        '5d6ac3dd-1ac9-41b6-ae0a-e8a85a97a21c': 'address1', //Union
+        '59daac4e-635b-43f1-a3c2-4000a70ec75e': 'address3', //Ward
+      };
+      return payload.reduce(
+        (acc, { attributeType, value }) => {
+          if (mapper[attributeType]) {
+            acc[mapper[attributeType]] = value;
+          }
+          return acc;
+        },
+        { country: '' },
+      );
+    };
+
     return {
       uuid: values.patientUuid,
       person: {
@@ -360,7 +380,8 @@ export class FormManager {
         birthdate,
         birthdateEstimated: values.birthdateEstimated,
         attributes: FormManager.getPatientAttributes(isNewPatient, values, patientUuidMap),
-        addresses: [values.address],
+        // addresses: [values.address],
+        addresses: [customAddress(FormManager.getPatientAttributes(isNewPatient, values, patientUuidMap))],
         ...FormManager.getPatientDeathInfo(values),
       },
       identifiers,

@@ -157,6 +157,7 @@ export interface FormValues {
   patientUuid: string;
   givenName: string;
   middleName: string;
+  idType?: string;
   familyName: string;
   additionalGivenName: string;
   additionalMiddleName: string;
