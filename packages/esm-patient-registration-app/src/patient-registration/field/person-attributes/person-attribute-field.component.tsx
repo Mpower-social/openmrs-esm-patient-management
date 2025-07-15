@@ -26,6 +26,7 @@ export function PersonAttributeField({ fieldDefinition }: PersonAttributeFieldPr
           <TextPersonAttributeField
             personAttributeType={personAttributeType}
             validationRegex={fieldDefinition.validation?.matches ?? ''}
+            errorMessage={fieldDefinition.validation?.errorMessage ?? ''}
             label={fieldDefinition.label}
             hide={fieldDefinition.hide}
             required={fieldDefinition.validation?.required ?? false}

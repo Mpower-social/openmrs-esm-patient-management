@@ -48,6 +48,8 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
+          matches: '^(?:\\+88|88)?01[3-9]\\d{8}$',
+          errorMessage: 'Invalid phone number',
         },
         label: t('mobileNo', 'Mobile No'),
       }}
@@ -176,6 +178,8 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
+          matches: '^[\u0980-\u09FFs]+$',
+          errorMessage: 'Only Bangla letters are allowed',
         },
         label: t('fullNameBangla', 'Full Name in Bangla'),
       }}
@@ -188,6 +192,8 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
+          matches: '^[A-Za-zs]+$',
+          errorMessage: 'Only English letters are allowed',
         },
         label: t('motherName', `Mother's Name`),
       }}
@@ -198,6 +204,11 @@ export function OtherRequireFields() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.motherNameBangla.personAttributeUuid,
         showHeading: false,
+        validation: {
+          required: false,
+          matches: '^[\u0980-\u09FFs]+$',
+          errorMessage: 'Only Bangla letters are allowed',
+        },
         label: t('motherNameBangla', `Mother's Name in Bangla`),
       }}
     />,
@@ -209,6 +220,8 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
+          matches: '^[A-Za-zs]+$',
+          errorMessage: 'Only English letters are allowed',
         },
         label: t('fatherNameEnglish', `Father's Name`),
       }}
@@ -219,6 +232,11 @@ export function OtherRequireFields() {
         type: 'person attribute',
         uuid: config.fieldConfigurations.fatherNameBangla.personAttributeUuid,
         showHeading: false,
+        validation: {
+          required: false,
+          matches: '^[\u0980-\u09FFs]+$',
+          errorMessage: 'Only Bangla letters are allowed',
+        },
         label: t('fatherNameBangla', `Father's Name in Bangla`),
       }}
     />,

@@ -11,7 +11,8 @@ export interface TextPersonAttributeFieldProps {
   label?: string;
   required?: boolean;
   disabled?: boolean;
-  hide?:boolean;
+  hide?: boolean;
+  errorMessage?: string;
 }
 
 export function TextPersonAttributeField({
@@ -21,7 +22,8 @@ export function TextPersonAttributeField({
   label,
   required,
   disabled,
-  hide
+  errorMessage,
+  hide,
 }: TextPersonAttributeFieldProps) {
   const { t } = useTranslation();
 
@@ -33,29 +35,35 @@ export function TextPersonAttributeField({
     if (regex.test(value)) {
       return;
     } else {
-      return t('invalidInput', 'Invalid Input');
+      if (errorMessage) {
+        return errorMessage;
+      } else {
+        return t('invalidInput', 'Invalid Input');
+      }
     }
   };
 
   const fieldName = `attributes.${personAttributeType.uuid}`;
 
   return (
-    !hide&& <div>
-      <Field name={fieldName} validate={validateInput}>
-        {({ field, form: { touched, errors }, meta }) => {
-          return (
-            <Input
-              id={id}
-              name={`person-attribute-${personAttributeType.uuid}`}
-              labelText={label ?? personAttributeType?.display}
-              invalid={errors[fieldName] && touched[fieldName]}
-              {...field}
-              disabled={disabled}
-              required={required}
-            />
-          );
-        }}
-      </Field>
-    </div>
+    !hide && (
+      <div>
+        <Field name={fieldName} validate={validateInput}>
+          {({ field, form: { touched, errors }, meta }) => {
+            return (
+              <Input
+                id={id}
+                name={`person-attribute-${personAttributeType.uuid}`}
+                labelText={label ?? personAttributeType?.display}
+                invalid={errors[fieldName] && touched[fieldName]}
+                {...field}
+                disabled={disabled}
+                required={required}
+              />
+            );
+          }}
+        </Field>
+      </div>
+    )
   );
 }

@@ -17,6 +17,7 @@ export interface FieldDefinition {
   validation?: {
     required: boolean;
     matches?: string;
+    errorMessage?: string;
   };
   hide?: boolean;
   answerConceptSetUuid?: string;
