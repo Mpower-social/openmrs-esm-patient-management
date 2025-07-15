@@ -6,7 +6,7 @@ import { type RegistrationConfig } from '../../config-schema';
 export function getValidationSchema(config: RegistrationConfig) {
   return Yup.object({
     givenName: Yup.string()
-      .matches(/^[A-Za-z\s]+$/, 'Only English letters are allowed')
+      .matches(/^(?=.*[A-Za-z])[A-Za-z\s]+$/, 'Only English letters are allowed')
       .required('givenNameRequired'),
     familyName: Yup.string().required('familyNameRequired'),
     additionalGivenName: Yup.string().when('addNameInLocalLanguage', {

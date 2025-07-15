@@ -192,7 +192,7 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
-          matches: '^[A-Za-zs]+$',
+          matches: '^(?=.*[A-Za-z])[A-Za-z\\s]+$',
           errorMessage: 'Only English letters are allowed',
         },
         label: t('motherName', `Mother's Name`),
@@ -206,7 +206,7 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: false,
-          matches: '^[\u0980-\u09FFs]+$',
+          matches: '^(?=.*[\\u0980-\\u09FF])[\\u0980-\\u09FF\\s]+$',
           errorMessage: 'Only Bangla letters are allowed',
         },
         label: t('motherNameBangla', `Mother's Name in Bangla`),
@@ -220,7 +220,7 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
-          matches: '^[A-Za-zs]+$',
+          matches: '^(?=.*[A-Za-z])[A-Za-z\\s]+$',
           errorMessage: 'Only English letters are allowed',
         },
         label: t('fatherNameEnglish', `Father's Name`),
@@ -234,7 +234,7 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: false,
-          matches: '^[\u0980-\u09FFs]+$',
+          matches: '^(?=.*[\\u0980-\\u09FF])[\\u0980-\\u09FF\\s]+$',
           errorMessage: 'Only Bangla letters are allowed',
         },
         label: t('fatherNameBangla', `Father's Name in Bangla`),
