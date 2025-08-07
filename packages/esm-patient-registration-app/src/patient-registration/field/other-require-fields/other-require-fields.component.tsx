@@ -178,7 +178,7 @@ export function OtherRequireFields() {
         showHeading: false,
         validation: {
           required: true,
-          matches: '^[\u0980-\u09FFs]+$',
+          matches: '^(?=.*[\\u0980-\\u09FF])[\\u0980-\\u09FF\\s]+$',
           errorMessage: 'Only Bangla letters are allowed',
         },
         label: t('fullNameBangla', 'Full Name in Bangla'),
