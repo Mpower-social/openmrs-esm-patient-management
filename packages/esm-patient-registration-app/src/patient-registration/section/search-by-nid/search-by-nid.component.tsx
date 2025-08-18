@@ -116,7 +116,6 @@ export function SearchByNID() {
             </Column>
             <Column sm={8} md={8} lg={4}>
               <DatePicker
-                readOnly={searchBody?.type === 'hid' && true}
                 datePickerType="single"
                 onChange={(e) => setSearchBody({ ...searchBody, dob: new Date(e[0]).toLocaleDateString('en-CA') })}>
                 <DatePickerInput
