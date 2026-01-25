@@ -43,6 +43,7 @@
   "familyNameRequired": "Family name is required",
   "fatherNameBangla": "Father's Name in Bangla",
   "fatherNameEnglish": "Father's Name",
+  "fatherNid": "Father's NID",
   "female": "Female",
   "fullNameBangla": "Full Name in Bangla",
   "gender": "Gender",
@@ -50,6 +51,9 @@
   "genderUnspecified": "Gender is not specified",
   "givenNameLabelText": "First Name",
   "givenNameRequired": "Given name is required",
+  "guardianName": "Guardian's Name",
+  "guardianNameBangla": "Guardian's Name in Bangla",
+  "hid": "HID",
   "identifierValueRequired": "Identifier value is required",
   "idFieldLabelText": "Identifiers",
   "IDInstructions": "Select the identifiers you'd like to add for this patient:",
@@ -66,6 +70,7 @@
   "mobileNo": "Mobile No",
   "motherName": "Mother's Name",
   "motherNameBangla": "Mother's Name in Bangla",
+  "motherNid": "Mother's NID",
   "nationality": "Nationality",
   "negativeMonths": "Negative months",
   "negativeYears": "Negative years",
@@ -117,6 +122,7 @@
   "updatePatientNotSuccessSnackbarTitle": "Patient Details Updated Failed",
   "updatePatientSuccessSnackbarSubtitle": "The patient's information has been successfully updated",
   "updatePatientSuccessSnackbarTitle": "Patient Details Updated",
+  "wealth": "Wealth",
   "yearsEstimateRequired": "Years estimate required",
   "yes": "Yes"
 }
