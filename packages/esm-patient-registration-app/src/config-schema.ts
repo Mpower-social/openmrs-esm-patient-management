@@ -185,6 +185,18 @@ export interface RegistrationConfig {
     biometricID: {
       personAttributeUuid: string;
     };
+    wealth: {
+      personAttributeUuid: string;
+    };
+    villageName: {
+      personAttributeUuid: string;
+    };
+
+    hid: { personAttributeUuid: string };
+    motherNid: { personAttributeUuid: string };
+    fatherNid: { personAttributeUuid: string };
+    guardianName: { personAttributeUuid: string };
+    guardianNameBangla: { personAttributeUuid: string };
   };
   links: {
     submitButton: string;
@@ -1019,6 +1031,110 @@ export const esmPatientRegistrationSchema = {
           _type: Type.String,
           _default: null,
           _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+    wealth: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '11bd9f2f-337b-459b-926e-53d41b749cb9',
+        _description: 'The UUID of the wealth attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+
+    villageName: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'b1847156-a441-437f-bc9e-a0375fb75b79',
+        _description: 'The UUID of the village name attribute type',
+      },
+      validation: {
+        // make it mandatory
+        required: { _type: Type.Boolean, _default: true },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of the input.',
+        },
+      },
+    },
+
+    hid: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '4b887ecb-bc6b-45e7-bb36-189a8252c745',
+        _description: 'The UUID of the HID attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+          _description: 'Optional RegEx for testing the validity of HID (if you want).',
+        },
+      },
+    },
+    motherNid: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '7a6e1b65-8b5a-4e0c-a059-2202b2052b54',
+        _description: 'The UUID of the Mother NID attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+        },
+      },
+    },
+    fatherNid: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: 'f9c7bfbf-682b-4ce9-9e2e-9f438d6f16f5',
+        _description: 'The UUID of the Father NID attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+        },
+      },
+    },
+    guardianName: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '9bdd8ff7-d918-4801-bf30-e223e35ea4f9',
+        _description: 'The UUID of the Guardian Name attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
+        },
+      },
+    },
+    guardianNameBangla: {
+      personAttributeUuid: {
+        _type: Type.UUID,
+        _default: '7e2e9fc6-0cdd-4f44-b383-a01839f611d2',
+        _description: 'The UUID of the Guardian Name in Bangla attribute type',
+      },
+      validation: {
+        required: { _type: Type.Boolean, _default: false },
+        matches: {
+          _type: Type.String,
+          _default: null,
         },
       },
     },

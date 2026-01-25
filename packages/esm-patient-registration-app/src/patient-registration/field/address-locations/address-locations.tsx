@@ -218,8 +218,12 @@ export function AddressLocations() {
     getFieldValue(FIELDS.WARD),
   ]);
 
-  const finalInputFields = [
-    ...fieldConfigurations.map(({ id, name, fetchNext, resetFields, data, loading, resetStates, fieldId }) => (
+  // ---- Final fields including Village Name after Union ----
+  const finalInputFields: JSX.Element[] = [];
+
+  fieldConfigurations.forEach(({ id, name, fetchNext, resetFields, data, loading, resetStates, fieldId }) => {
+    // Location dropdown (Division / District / ... / Union / Ward / Block)
+    finalInputFields.push(
       <Column key={id} lg={4} md={4} sm={2}>
         <LocationField
           id={id}
@@ -233,9 +237,34 @@ export function AddressLocations() {
           resetStates={resetStates}
           fieldId={fieldId}
         />
-      </Column>
-    )),
-    <Column lg={4} md={4} sm={2}>
+      </Column>,
+    );
+
+    // Insert Village Name *right after* Union
+    if (id === 'union') {
+      finalInputFields.push(
+        <Column key="villageName" lg={4} md={4} sm={2}>
+          <PersonAttributeField
+            fieldDefinition={{
+              id: 'villageName',
+              type: 'person attribute',
+              uuid: config.fieldConfigurations.villageName.personAttributeUuid,
+              showHeading: false,
+              label: t('villageName', 'Village Name'),
+              validation: {
+                required: true,
+              },
+              ...config.fieldConfigurations.villageName,
+            }}
+          />
+        </Column>,
+      );
+    }
+  });
+
+  // Address (House No. / Street No.)
+  finalInputFields.push(
+    <Column key="patientAddress" lg={4} md={4} sm={2}>
       <PersonAttributeField
         fieldDefinition={{
           id: 'patientAddress',
@@ -247,7 +276,7 @@ export function AddressLocations() {
         }}
       />
     </Column>,
-  ];
+  );
 
   return <div>{!divisionLoading && <Grid>{finalInputFields}</Grid>}</div>;
 }

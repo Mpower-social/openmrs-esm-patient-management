@@ -60,6 +60,21 @@ export function OtherInfo() {
 
     <AddressLocationsAttributeField
       fieldDefinition={{
+        id: 'wealth',
+        type: 'person attribute',
+        uuid: config.fieldConfigurations.wealth.personAttributeUuid,
+        showHeading: false,
+        label: t('wealth', 'Wealth'),
+        ...config.fieldConfigurations.wealth,
+        customConceptAnswers: ['Ultra-poor', 'Poor', 'Middle-class', 'Rich'].map((item) => ({
+          uuid: item,
+          label: item,
+        })),
+      }}
+    />,
+
+    <AddressLocationsAttributeField
+      fieldDefinition={{
         id: 'eduQualification',
         type: 'person attribute',
         uuid: config.fieldConfigurations.eduQualification.personAttributeUuid,

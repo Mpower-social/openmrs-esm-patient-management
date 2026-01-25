@@ -13,18 +13,16 @@ export function OtherRequireFields() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    (values as any).gender &&
-      setFieldValue(
-        'idType',
-        (values as any)?.attributes?.[config.fieldConfigurations.brn.personAttributeUuid]
-          ? 'brd'
-          : (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid]
-            ? 'nid'
-            : 'none',
-      );
+    const attrs = (values as any)?.attributes ?? {};
+    const hasHid = attrs[config.fieldConfigurations.hid.personAttributeUuid];
+    const hasBrn = attrs[config.fieldConfigurations.brn.personAttributeUuid];
+    const hasNid = attrs[config.fieldConfigurations.nid.personAttributeUuid];
+    const newIdType = hasHid ? 'hid' : hasBrn ? 'brn' : hasNid ? 'nid' : 'none';
+    setFieldValue('idType', newIdType);
   }, [
-    (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid],
+    (values as any)?.attributes?.[config.fieldConfigurations.hid.personAttributeUuid],
     (values as any)?.attributes?.[config.fieldConfigurations.brn.personAttributeUuid],
+    (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid],
   ]);
 
   const otherInputFields = [
@@ -129,14 +127,14 @@ export function OtherRequireFields() {
       options={[
         { value: 'nid', text: 'NID' },
         { value: 'brn', text: 'BRN' },
+        { value: 'hid', text: 'HID' },
         { value: 'none', text: t('none', 'None') },
       ]}
       defaultValue={'nid'}
       required={
-        (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid] &&
-        (values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid]
-          ? false
-          : true
+        !(values as any)?.attributes?.[config.fieldConfigurations.nid.personAttributeUuid] &&
+        !(values as any)?.attributes?.[config.fieldConfigurations.brn.personAttributeUuid] &&
+        !(values as any)?.attributes?.[config.fieldConfigurations.hid.personAttributeUuid]
       }
       label={t('idType', 'Id Type')}
     />,
@@ -170,6 +168,24 @@ export function OtherRequireFields() {
         }}
       />
     ),
+
+    // HID field
+    ((values as any)?.idType === 'hid' ||
+      (values as any)?.attributes?.[config.fieldConfigurations.hid.personAttributeUuid]) && (
+      <PersonAttributeField
+        fieldDefinition={{
+          id: 'hid',
+          type: 'person attribute',
+          uuid: config.fieldConfigurations.hid.personAttributeUuid,
+          showHeading: false,
+          validation: {
+            required: true,
+          },
+          label: t('hid', 'HID'),
+        }}
+      />
+    ),
+
     <PersonAttributeField
       fieldDefinition={{
         id: 'fullNameBangla',
@@ -184,6 +200,7 @@ export function OtherRequireFields() {
         label: t('fullNameBangla', 'Full Name in Bangla'),
       }}
     />,
+
     <PersonAttributeField
       fieldDefinition={{
         id: 'motherName',
@@ -212,6 +229,17 @@ export function OtherRequireFields() {
         label: t('motherNameBangla', `Mother's Name in Bangla`),
       }}
     />,
+
+    <PersonAttributeField
+      fieldDefinition={{
+        id: 'motherNid',
+        type: 'person attribute',
+        uuid: config.fieldConfigurations.motherNid.personAttributeUuid,
+        showHeading: false,
+        label: t('motherNid', `Mother's NID`),
+      }}
+    />,
+
     <PersonAttributeField
       fieldDefinition={{
         id: 'fatherNameEnglish',
@@ -238,6 +266,41 @@ export function OtherRequireFields() {
           errorMessage: 'Only Bangla letters are allowed',
         },
         label: t('fatherNameBangla', `Father's Name in Bangla`),
+      }}
+    />,
+
+    <PersonAttributeField
+      fieldDefinition={{
+        id: 'fatherNid',
+        type: 'person attribute',
+        uuid: config.fieldConfigurations.fatherNid.personAttributeUuid,
+        showHeading: false,
+        label: t('fatherNid', `Father's NID`),
+      }}
+    />,
+
+    <PersonAttributeField
+      fieldDefinition={{
+        id: 'guardianName',
+        type: 'person attribute',
+        uuid: config.fieldConfigurations.guardianName.personAttributeUuid,
+        showHeading: false,
+        label: t('guardianName', `Guardian's Name`),
+      }}
+    />,
+
+    <PersonAttributeField
+      fieldDefinition={{
+        id: 'guardianNameBangla',
+        type: 'person attribute',
+        uuid: config.fieldConfigurations.guardianNameBangla.personAttributeUuid,
+        showHeading: false,
+        validation: {
+          required: true,
+          matches: '^(?=.*[\\u0980-\\u09FF])[\\u0980-\\u09FF\\s]+$',
+          errorMessage: 'Only Bangla letters are allowed',
+        },
+        label: t('guardianNameBangla', `Guardian's Name in Bangla`),
       }}
     />,
   ].filter(Boolean);
